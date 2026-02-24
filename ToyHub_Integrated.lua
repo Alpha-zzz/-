@@ -639,9 +639,9 @@ end
 
 local function compileGroup()
     if #anchoredParts == 0 then 
-        OrionLib:MakeNotification({Name = "Error", Content = "No anchored parts found", Image = "rbxassetid://4483345998", Time = 5})
+        OrionLib:MakeNotification({Name = "エラー", Content = "固定パーツが見つかりません", Image = "rbxassetid://4483345998", Time = 5})
     else
-        OrionLib:MakeNotification({Name = "Success", Content = "Compiled "..#anchoredParts.." Toys together", Image = "rbxassetid://4483345998", Time = 5})
+        OrionLib:MakeNotification({Name = "成功", Content = "Compiled "..#anchoredParts.."個のおもちゃを結合しました", Image = "rbxassetid://4483345998", Time = 5})
     end
 
     local primaryPart = anchoredParts[1]
@@ -794,7 +794,7 @@ local function reloadMissile(bool)
     if bool then
         if not ownedToys[_G.ToyToLoad] then
             OrionLib:MakeNotification({
-                Name = "Missing toy",
+                Name = "おもちゃ未所有",
                 Content = "You do not own the ".._G.ToyToLoad.." toy.",
                 Image = "rbxassetid://4483345998",
                 Time = 3
@@ -3640,7 +3640,7 @@ local function toggleNoclip(state)
         -- Noclipを有効化
         enableNoclip()
         OrionLib:MakeNotification({
-            Name = "Noclip",
+            Name = "壁すり抜け",
             Content = "Noclipを有効化しました（壁抜け可能）",
             Image = "rbxassetid://4483362458",
             Time = 2
@@ -3649,7 +3649,7 @@ local function toggleNoclip(state)
         -- Noclipを無効化
         disableNoclip()
         OrionLib:MakeNotification({
-            Name = "Noclip",
+            Name = "壁すり抜け",
             Content = "Noclipを無効化しました（通常の当たり判定）",
             Image = "rbxassetid://4483362458",
             Time = 2
@@ -3717,7 +3717,7 @@ MainTab:AddSlider({
     Default = FeatherConfig.spacing,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         FeatherConfig.spacing = Value
         if FeatherConfig.Enabled then
@@ -3735,7 +3735,7 @@ MainTab:AddSlider({
     Default = FeatherConfig.heightOffset,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         FeatherConfig.heightOffset = Value
     end
@@ -3748,7 +3748,7 @@ MainTab:AddSlider({
     Default = FeatherConfig.backwardOffset,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         FeatherConfig.backwardOffset = Value
     end
@@ -3795,7 +3795,7 @@ MainTab:AddSlider({
     Default = FeatherConfig.baseAmplitude,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         FeatherConfig.baseAmplitude = Value
     end
@@ -3850,7 +3850,7 @@ RingTab:AddSlider({
     Default = RingConfig.RingHeight,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         RingConfig.RingHeight = Value
     end
@@ -3863,7 +3863,7 @@ RingTab:AddSlider({
     Default = RingConfig.RingDiameter,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         RingConfig.RingDiameter = Value
     end
@@ -3942,7 +3942,7 @@ HeartTab:AddSlider({
     Default = HeartConfig.Size,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         HeartConfig.Size = Value
     end
@@ -3955,7 +3955,7 @@ HeartTab:AddSlider({
     Default = HeartConfig.Height,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         HeartConfig.Height = Value
     end
@@ -4016,7 +4016,7 @@ HeartTab:AddSlider({
     Default = HeartConfig.PulseAmplitude,
     Color = Theme.SliderColor,
     Increment = 0.1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         HeartConfig.PulseAmplitude = Value
     end
@@ -4083,7 +4083,7 @@ BigHeartTab:AddSlider({
     Default = BigHeartConfig.Size,
     Color = Theme.SliderColor,
     Increment = 1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         BigHeartConfig.Size = Value
     end
@@ -4122,7 +4122,7 @@ BigHeartTab:AddSlider({
     Default = BigHeartConfig.Height,
     Color = Theme.SliderColor,
     Increment = 1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         BigHeartConfig.Height = Value
     end
@@ -4183,7 +4183,7 @@ BigHeartTab:AddSlider({
     Default = BigHeartConfig.PulseAmplitude,
     Color = Theme.SliderColor,
     Increment = 0.1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         BigHeartConfig.PulseAmplitude = Value
     end
@@ -4250,7 +4250,7 @@ StarOfDavidTab:AddSlider({
     Default = StarOfDavidConfig.Size,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         StarOfDavidConfig.Size = Value
     end
@@ -4263,7 +4263,7 @@ StarOfDavidTab:AddSlider({
     Default = StarOfDavidConfig.Height,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         StarOfDavidConfig.Height = Value
     end
@@ -4276,7 +4276,7 @@ StarOfDavidTab:AddSlider({
     Default = StarOfDavidConfig.TriangleHeight,
     Color = Theme.SliderColor,
     Increment = 0.1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         StarOfDavidConfig.TriangleHeight = Value
     end
@@ -4391,7 +4391,7 @@ StarTab:AddSlider({
     Default = StarConfig.OuterRadius,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         StarConfig.OuterRadius = Value
     end
@@ -4404,7 +4404,7 @@ StarTab:AddSlider({
     Default = StarConfig.InnerRadius,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         StarConfig.InnerRadius = Value
     end
@@ -4417,7 +4417,7 @@ StarTab:AddSlider({
     Default = StarConfig.Height,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         StarConfig.Height = Value
     end
@@ -4540,7 +4540,7 @@ SuperRingTab:AddSlider({
     Default = SuperRingConfig.Radius,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         SuperRingConfig.Radius = Value
     end
@@ -4553,7 +4553,7 @@ SuperRingTab:AddSlider({
     Default = SuperRingConfig.BaseHeight,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         SuperRingConfig.BaseHeight = Value
     end
@@ -4566,7 +4566,7 @@ SuperRingTab:AddSlider({
     Default = SuperRingConfig.Height,
     Color = Theme.SliderColor,
     Increment = 1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         SuperRingConfig.Height = Value
         if SuperRingConfig.Enabled then
@@ -4645,7 +4645,7 @@ SuperRingTab:AddSlider({
     Default = SuperRingConfig.WaveAmplitude,
     Color = Theme.SliderColor,
     Increment = 0.1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         SuperRingConfig.WaveAmplitude = Value
     end
@@ -4712,7 +4712,7 @@ ManjiTab:AddSlider({
     Default = ManjiConfig.Size,
     Color = Theme.SliderColor,
     Increment = 1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         ManjiConfig.Size = Value
     end
@@ -4725,7 +4725,7 @@ ManjiTab:AddSlider({
     Default = ManjiConfig.Height,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         ManjiConfig.Height = Value
     end
@@ -4738,7 +4738,7 @@ ManjiTab:AddSlider({
     Default = ManjiConfig.ArmLength,
     Color = Theme.SliderColor,
     Increment = 0.1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         ManjiConfig.ArmLength = Value
     end
@@ -4751,7 +4751,7 @@ ManjiTab:AddSlider({
     Default = ManjiConfig.ArmThickness,
     Color = Theme.SliderColor,
     Increment = 0.05,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         ManjiConfig.ArmThickness = Value
     end
@@ -4812,7 +4812,7 @@ ManjiTab:AddSlider({
     Default = ManjiConfig.PulseAmplitude,
     Color = Theme.SliderColor,
     Increment = 0.1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         ManjiConfig.PulseAmplitude = Value
     end
@@ -4879,7 +4879,7 @@ Star2Tab:AddSlider({
     Default = Star2Config.Size,
     Color = Theme.SliderColor,
     Increment = 1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         Star2Config.Size = Value
     end
@@ -4892,7 +4892,7 @@ Star2Tab:AddSlider({
     Default = Star2Config.RayLength,
     Color = Theme.SliderColor,
     Increment = 0.5,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         Star2Config.RayLength = Value
     end
@@ -4905,7 +4905,7 @@ Star2Tab:AddSlider({
     Default = Star2Config.Height,
     Color = Theme.SliderColor,
     Increment = 1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         Star2Config.Height = Value
     end
@@ -4984,7 +4984,7 @@ Star2Tab:AddSlider({
     Default = Star2Config.PulseAmplitude,
     Color = Theme.SliderColor,
     Increment = 0.2,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         Star2Config.PulseAmplitude = Value
     end
@@ -5014,7 +5014,7 @@ Star2Tab:AddSlider({
     Default = Star2Config.JitterAmount,
     Color = Theme.SliderColor,
     Increment = 0.1,
-    ValueName = "studs",
+    ValueName = "スタッド",
     Callback = function(Value)
         Star2Config.JitterAmount = Value
     end
@@ -5105,18 +5105,18 @@ OrionLib:MakeNotification({
 -- Scripture機能: Grab/Object/Defense/Aura/Fun系タブ
 -- ==============================================
 
-local GrabTab = Window:MakeTab({Name = "Grab", Icon =  "rbxassetid://18624615643", PremiumOnly = false})
+local GrabTab = Window:MakeTab({Name = "掴み操作", Icon =  "rbxassetid://18624615643", PremiumOnly = false})
 
-local ObjectGrabTab = Window:MakeTab({Name = "Object Grab", Icon =  "rbxassetid://18624606749", PremiumOnly = false})
-local DefenseTab = Window:MakeTab({Name = "Defense", Icon =  "rbxassetid://18624604880", PremiumOnly = false})
-local BlobmanTab = Window:MakeTab({Name = "Blob-man Grab", Icon =  "rbxassetid://18624614127", PremiumOnly = false})
-local FunTab = Window:MakeTab({Name = "Fun", Icon =  "rbxassetid://18624603093", PremiumOnly = false})
-local ScriptTab = Window:MakeTab({Name = "Scripts", Icon =  "rbxassetid://11570626783", PremiumOnly = false})
-local AuraTab = Window:MakeTab({Name = "Auras", Icon =  "rbxassetid://18624608005", PremiumOnly = false})
-local CharacterTab = Window:MakeTab({Name = "Character", Icon =  "rbxassetid://18624601543", PremiumOnly = false})
-local ExplosionTab = Window:MakeTab({Name = "Explosions", Icon =  "rbxassetid://18624610285", PremiumOnly = false})
-local KeybindsTab = Window:MakeTab({Name = "Keybinds", Icon =  "rbxassetid://18624616682", PremiumOnly = false})
-local DevTab = Window:MakeTab({Name = "Dev Testing", Icon =  "rbxassetid://18624599762", PremiumOnly = false})
+local ObjectGrabTab = Window:MakeTab({Name = "オブジェクト掴み", Icon =  "rbxassetid://18624606749", PremiumOnly = false})
+local DefenseTab = Window:MakeTab({Name = "防御", Icon =  "rbxassetid://18624604880", PremiumOnly = false})
+local BlobmanTab = Window:MakeTab({Name = "ブロブマン操作", Icon =  "rbxassetid://18624614127", PremiumOnly = false})
+local FunTab = Window:MakeTab({Name = "お楽しみ", Icon =  "rbxassetid://18624603093", PremiumOnly = false})
+local ScriptTab = Window:MakeTab({Name = "外部スクリプト", Icon =  "rbxassetid://11570626783", PremiumOnly = false})
+local AuraTab = Window:MakeTab({Name = "オーラ", Icon =  "rbxassetid://18624608005", PremiumOnly = false})
+local CharacterTab = Window:MakeTab({Name = "キャラクター", Icon =  "rbxassetid://18624601543", PremiumOnly = false})
+local ExplosionTab = Window:MakeTab({Name = "爆発操作", Icon =  "rbxassetid://18624610285", PremiumOnly = false})
+local KeybindsTab = Window:MakeTab({Name = "キーバインド", Icon =  "rbxassetid://18624616682", PremiumOnly = false})
+local DevTab = Window:MakeTab({Name = "開発テスト", Icon =  "rbxassetid://18624599762", PremiumOnly = false})
 
 
 
@@ -5124,7 +5124,7 @@ _G.strength = 400
 
 
 GrabTab:AddSlider({
-    Name = "Strength",
+    Name = "投げ力",
     Min = 300,
     Max = 4000,
     Color = Color3.fromRGB(240, 0, 0),
@@ -5139,7 +5139,7 @@ GrabTab:AddSlider({
 })
 
 GrabTab:AddToggle({
-    Name = "Strength",
+    Name = "投げ力",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5171,10 +5171,10 @@ GrabTab:AddToggle({
     end
 })
 
-GrabTab:AddParagraph("Grab stuff", "These effects apply when you grab someone")
+GrabTab:AddParagraph("掴み系", "相手を掴んだ時にこれらの効果が適用されます")
 
 GrabTab:AddToggle({
-    Name = "Poison Grab",
+    Name = "毒掴み",
     Default = false,
     Save = true,
     Color = Color3.fromRGB(240, 0, 0),
@@ -5196,7 +5196,7 @@ GrabTab:AddToggle({
 })
 
 GrabTab:AddToggle({
-    Name = "Radioactive Grab",
+    Name = "放射能掴み",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5218,7 +5218,7 @@ GrabTab:AddToggle({
 })
 
 GrabTab:AddToggle({
-    Name = "Fire Grab",
+    Name = "炎掴み",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5237,7 +5237,7 @@ GrabTab:AddToggle({
 })
 
 GrabTab:AddToggle({
-    Name = "No-clip Grab",
+    Name = "すり抜け掴み",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5256,7 +5256,7 @@ GrabTab:AddToggle({
 })
 
 GrabTab:AddToggle({
-    Name = "Kick Grab",
+    Name = "キック掴み",
     Color = Color3.fromRGB(240, 0, 0),
     Default = false,
     Save = true,
@@ -5286,7 +5286,7 @@ GrabTab:AddToggle({
 
 
 GrabTab:AddToggle({
-    Name = "Kick Grab Anchor (works with Kick Grab)",
+    Name = "キック掴み固定（キック掴みと併用）",
     Default = false,
     Save = true,
     Color = Color3.fromRGB(240, 0, 0),
@@ -5309,7 +5309,7 @@ GrabTab:AddToggle({
 GrabTab:AddParagraph("All-Features", "Make sure there are no campfires spawned by you BEFORE using this")
 
 GrabTab:AddToggle({
-    Name = "Fire All",
+    Name = "全員炎攻撃",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5330,7 +5330,7 @@ GrabTab:AddToggle({
 ObjectGrabTab:AddParagraph("Object-Only", "These effects only apply on objects.")
 
 ObjectGrabTab:AddToggle({
-    Name = "Anchor Grab",
+    Name = "固定掴み",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5353,14 +5353,14 @@ ObjectGrabTab:AddToggle({
 ObjectGrabTab:AddParagraph("Anchor grab information", "If someone grabs your anchored parts, they will fall and you will need to position them again!")
 
 ObjectGrabTab:AddButton({
-    Name = "Unanchor parts",
+    Name = "パーツ固定解除",
     Callback = cleanupAnchoredParts
 })
 
 ObjectGrabTab:AddParagraph("Compile?", "(New) This option allows you to compile all the anchored parts into one. To control this 'Build', you need to move the header part. The first part you grabbed will be the header and will be highlighted green")
 
 ObjectGrabTab:AddButton({
-    Name = "Compile Parts",
+    Name = "パーツ結合",
     Callback = function()
         compileGroup()
         if not compileCoroutine or coroutine.status(compileCoroutine) == "dead" then
@@ -5373,7 +5373,7 @@ ObjectGrabTab:AddButton({
 ObjectGrabTab:AddParagraph("Disassemble", "De-compiles the build")
 
 ObjectGrabTab:AddButton({
-    Name = "Disassemble Parts",
+    Name = "パーツ分解",
     Callback = function()
         cleanupCompiledGroups()
         cleanupAnchoredParts()
@@ -5385,7 +5385,7 @@ ObjectGrabTab:AddButton({
     end
 })
 ObjectGrabTab:AddToggle({
-    Name = "Auto Recover Dropped Parts",
+    Name = "落としたパーツ自動回収",
     Color = Color3.fromRGB(240, 0, 0),
     Default = false,
     Save = true,
@@ -5405,7 +5405,7 @@ ObjectGrabTab:AddToggle({
     end
 })
 ObjectGrabTab:AddButton({
-    Name = "Unanchor Header Part",
+    Name = "ヘッダーパーツ固定解除",
     Callback = unanchorPrimaryPart
 })
 
@@ -5413,7 +5413,7 @@ ObjectGrabTab:AddButton({
 DefenseTab:AddLabel("Grab Defense")
 
 DefenseTab:AddToggle({
-    Name = "Anti-Grab",
+    Name = "掴み防止",
     Color = Color3.fromRGB(240, 0, 0),
     Default = false,
     Save = true,
@@ -5454,7 +5454,7 @@ DefenseTab:AddToggle({
 })
 
 DefenseTab:AddToggle({
-    Name = "Anti-Kick-Grab",
+    Name = "キック掴み防止",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5486,7 +5486,7 @@ DefenseTab:AddToggle({
 
 
 DefenseTab:AddToggle({
-    Name = "Anti-Explosion",
+    Name = "爆発防止",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5522,7 +5522,7 @@ DefenseTab:AddToggle({
 DefenseTab:AddLabel("Self-Defense")
 
 DefenseTab:AddToggle({
-    Name = "Self-Defense - Air Suspend",
+    Name = "自衛 - 空中浮遊",
     Color = Color3.fromRGB(240, 0, 0),
     Default = false,
     Save = true,
@@ -5566,7 +5566,7 @@ DefenseTab:AddToggle({
 })
 
 DefenseTab:AddToggle({
-    Name = "Self-Defense Kick - Silent",
+    Name = "自衛キック - サイレント",
     Default = false,
     Save = true,
     Color = Color3.fromRGB(240, 0, 0),
@@ -5612,7 +5612,7 @@ DefenseTab:AddToggle({
 })
 local blobman1
 blobman1 = BlobmanTab:AddToggle({
-    Name = "Loop Grab All",
+    Name = "全員掴みループ",
     Color = Color3.fromRGB(240, 0, 0),
     Default = false,
     Callback = function(enabled)
@@ -5631,7 +5631,7 @@ blobman1 = BlobmanTab:AddToggle({
 
                 if not foundBlobman then
                     OrionLib:MakeNotification({
-                        Name = "Error",
+                        Name = "エラー",
                         Content = "You must be mounted upon a blobman to begin this process. Please mount one and toggle this again!", 
                         Image = "rbxassetid://4483345998", 
                         Time = 5
@@ -5668,7 +5668,7 @@ blobman1 = BlobmanTab:AddToggle({
     end
 })
 BlobmanTab:AddSlider({
-    Name = "Delay",
+    Name = "遅延",
     Min = 0.0005,
     Max = 1,
     Color = Color3.fromRGB(240, 0, 0),
@@ -5679,10 +5679,10 @@ BlobmanTab:AddSlider({
         _G.BlobmanDelay  = value
     end
 })
-AuraTab:AddLabel("Auras")
+AuraTab:AddLabel("オーラ")
 
 AuraTab:AddSlider({
-    Name = "Radius",
+    Name = "範囲",
     Min = 5,
     Max = 40,
     Color = Color3.fromRGB(240, 0, 0),
@@ -5695,7 +5695,7 @@ AuraTab:AddSlider({
 })
 
 AuraTab:AddToggle({
-    Name = "Air Suspend Aura",
+    Name = "空中浮遊オーラ",
     Color = Color3.fromRGB(240, 0, 0),
     Default = false,
     Save = true,
@@ -5747,7 +5747,7 @@ AuraTab:AddToggle({
 })
 
 AuraTab:AddToggle({
-    Name = "Hell send Aura",
+    Name = "地獄送りオーラ",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5798,7 +5798,7 @@ AuraTab:AddToggle({
 })
 
 AuraTab:AddToggle({
-    Name = "Kick Aura",
+    Name = "キックオーラ",
     Color = Color3.fromRGB(240, 0, 0),
     Default = false,
     Save = true,
@@ -5909,7 +5909,7 @@ AuraTab:AddToggle({
 })
 
 AuraTab:AddDropdown({
-    Name = "Select Kick Mode",
+    Name = "キックモード選択",
     Options = {"Sky", "Silent"},
     Default = "",
     Save = true,
@@ -5924,7 +5924,7 @@ AuraTab:AddDropdown({
 })
 
 AuraTab:AddToggle({
-    Name = "Poison Aura",
+    Name = "毒オーラ",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -5985,7 +5985,7 @@ AuraTab:AddToggle({
 
 
 CharacterTab:AddToggle({
-    Name = "Crouch Speed",
+    Name = "しゃがみ速度",
     Default = false,
     Save = true,
     Color = Color3.fromRGB(240, 0, 0),
@@ -6015,7 +6015,7 @@ CharacterTab:AddToggle({
 })
 
 CharacterTab:AddSlider({
-    Name = "Set Crouch Speed",
+    Name = "しゃがみ速度設定",
     Min = 6,
     Max = 1000,
     Color = Color3.fromRGB(240, 0, 0),
@@ -6030,7 +6030,7 @@ CharacterTab:AddSlider({
 })
 
 CharacterTab:AddToggle({
-    Name = "Crouch Jump Power",
+    Name = "しゃがみジャンプ力",
     Default = false,
     Save = true,
     Flag = "CrouchJumpPower",
@@ -6060,7 +6060,7 @@ CharacterTab:AddToggle({
 })
 
 CharacterTab:AddSlider({
-    Name = "Set Crouch Jump Power",
+    Name = "しゃがみジャンプ力設定",
     Min = 6,
     Max = 1000,
     Color = Color3.fromRGB(240, 0, 0),
@@ -6078,7 +6078,7 @@ CharacterTab:AddSlider({
 FunTab:AddLabel("Clone Manipulation (grab them to keep their NetworkOwnership)")
 
 FunTab:AddSlider({
-    Name = "Offset",
+    Name = "オフセット",
     Min = 1,
     Max = 10,
     Color = Color3.fromRGB(240, 0, 0),
@@ -6091,7 +6091,7 @@ FunTab:AddSlider({
 })
 
 FunTab:AddTextbox({
-    Name = "Circle Radius",
+    Name = "円の半径",
     Default = "Radius for Surround Mode (Adjust based on clones)",
     TextDisappear = false,
     Callback = function(value)
@@ -6100,7 +6100,7 @@ FunTab:AddTextbox({
 })
 
 FunTab:AddButton({
-    Name = "Decoy Follow",
+    Name = "デコイ追従",
     Callback = function()
         local decoys = {}
         for _, descendant in pairs(workspace:GetDescendants()) do
@@ -6177,12 +6177,12 @@ FunTab:AddButton({
         for _, decoy in pairs(decoys) do
             setupDecoy(decoy)
         end
-        OrionLib:MakeNotification({Name = "Notification", Content = "Got "..numDecoys.." units. Manually click each unit if they don't move", Image = "rbxassetid://4483345998", Time = 5})
+        OrionLib:MakeNotification({Name = "通知", Content = "Got "..numDecoys.." units. Manually click each unit if they don't move", Image = "rbxassetid://4483345998", Time = 5})
     end
 })
 
 FunTab:AddButton({
-    Name = "Toggle Mode",
+    Name = "モード切替",
     
     Callback = function()
         followMode = not followMode
@@ -6190,7 +6190,7 @@ FunTab:AddButton({
 })
 
 FunTab:AddButton({
-    Name = "Disconnect Clones",
+    Name = "クローン切断",
     Callback = cleanupConnections(connections)
 })
 
@@ -6214,11 +6214,11 @@ ScriptTab:AddButton({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
     end
 })
-local KeybindSection = KeybindsTab:AddSection({Name = "Player Keybinds"})
-KeybindSection:AddParagraph("Tip", "Press while looking at a player")
+local KeybindSection = KeybindsTab:AddSection({Name = "プレイヤー操作キー"})
+KeybindSection:AddParagraph("ヒント", "Press while looking at a player")
 
 KeybindSection:AddBind({
-    Name = "Send To Hell",
+    Name = "地獄送り",
     Default = "Z",
     Hold = false,
     Save = true,
@@ -6252,7 +6252,7 @@ KeybindSection:AddBind({
 })
 
 KeybindSection:AddBind({
-    Name = "Kick",
+    Name = "キック",
     Default = "X",
     Hold = false,
     Save = true,
@@ -6292,7 +6292,7 @@ KeybindSection:AddBind({
 })
 
 KeybindSection:AddDropdown({
-    Name = "Select Kick Mode",
+    Name = "キックモード選択",
     Options = {"Sky", "Silent"},
     Default = "Silent",
     Callback = function(selected)
@@ -6301,7 +6301,7 @@ KeybindSection:AddDropdown({
 })
 
 KeybindSection:AddBind({
-    Name = "Kill (Unstable)",
+    Name = "キル（不安定）",
     Default = "C",
     Hold = false,
     Save = true,
@@ -6329,7 +6329,7 @@ KeybindSection:AddBind({
 })
 
 KeybindSection:AddBind({
-    Name = "Burn",
+    Name = "燃やす",
     Default = "V",
     Hold = false,
     Save = true,
@@ -6338,7 +6338,7 @@ KeybindSection:AddBind({
         local mouse = localPlayer:GetMouse()
         local target = mouse.Target
         if not ownedToys["Campfire"] then 
-            OrionLib:MakeNotification({Name = "Missing toy", Content = "You do not own the Campfire toy. ", Image = "rbxassetid://4483345998", Time = 3})
+            OrionLib:MakeNotification({Name = "おもちゃ未所有", Content = "キャンプファイヤーを持っていません", Image = "rbxassetid://4483345998", Time = 3})
             return
         end
         if target and target:IsA("BasePart") then
@@ -6367,17 +6367,17 @@ KeybindSection:AddBind({
         end
     end
 })
-local KeybindSection2 = KeybindsTab:AddSection({Name = "Missilea Keybinds"})
-KeybindSection2:AddParagraph("Tip", "Press anywhere")
+local KeybindSection2 = KeybindsTab:AddSection({Name = "ミサイル操作キー"})
+KeybindSection2:AddParagraph("ヒント", "どこかを押してください")
 KeybindSection2:AddBind({
-    Name = "Explode Bomb",
+    Name = "爆弾爆発",
     Default = "B",
     Hold = false,
     Save = true,
     Flag = "ExplodeBombKeybind",
     Callback = function()
         if not ownedToys["BombMissile"] then 
-            OrionLib:MakeNotification({Name = "Missing toy", Content = "You do not own the BombMissile toy. ", Image = "rbxassetid://4483345998", Time = 3})
+            OrionLib:MakeNotification({Name = "おもちゃ未所有", Content = "爆弾ミサイルを持っていません", Image = "rbxassetid://4483345998", Time = 3})
             return
         end
         local connection
@@ -6391,7 +6391,7 @@ KeybindSection2:AddBind({
                         local bomb = child
                         local args = {
                             [1] = {
-                                ["Radius"] = 17.5,
+                                ["範囲"] = 17.5,
                                 ["TimeLength"] = 2,
                                 ["Hitbox"] = child.PartHitDetector,
                                 ["ExplodesByFire"] = false,
@@ -6416,14 +6416,14 @@ KeybindSection2:AddBind({
     end
 })
 KeybindSection2:AddBind({
-    Name = "Throw Bomb",
+    Name = "爆弾投げ",
     Default = "M",
     Hold = false,
     Save = true,
     Flag = "ThrowBombKeybind",
     Callback = function()
         if not ownedToys["BombMissile"] then 
-            OrionLib:MakeNotification({Name = "Missing toy", Content = "You do not own the BombMissile toy. ", Image = "rbxassetid://4483345998", Time = 3})
+            OrionLib:MakeNotification({Name = "おもちゃ未所有", Content = "爆弾ミサイルを持っていません", Image = "rbxassetid://4483345998", Time = 3})
             return
         end
         
@@ -6450,14 +6450,14 @@ KeybindSection2:AddBind({
 })
 
 KeybindSection2:AddBind({
-    Name = "Explode Firework",
+    Name = "花火爆発",
     Default = "N",
     Hold = false,
     Save = true,
     Flag = "ExplodeFireworkKeybind",
     Callback = function()
         if not ownedToys["FireworkMissile"] then 
-            OrionLib:MakeNotification({Name = "Missing toy", Content = "You do not own the FireworkMissile toy. ", Image = "rbxassetid://4483345998", Time = 3})
+            OrionLib:MakeNotification({Name = "おもちゃ未所有", Content = "花火ミサイルを持っていません", Image = "rbxassetid://4483345998", Time = 3})
             return
         end
         local connection
@@ -6471,7 +6471,7 @@ KeybindSection2:AddBind({
                         local bomb = child
                         local args = {
                             [1] = {
-                                ["Radius"] = 17.5,
+                                ["範囲"] = 17.5,
                                 ["TimeLength"] = 2,
                                 ["Hitbox"] = child.PartHitDetector,
                                 ["ExplodesByFire"] = false,
@@ -6495,10 +6495,10 @@ KeybindSection2:AddBind({
         connection:Disconnect()
     end
 })
-KeybindSection2:AddParagraph("Tip", "Hold to reload bombs")
+KeybindSection2:AddParagraph("ヒント", "Hold to reload bombs")
 
 KeybindSection2:AddBind({
-    Name = "Missile Cache Reload",
+    Name = "ミサイル補充",
     Default = "R",
     Hold = true,
     Save = true,
@@ -6513,14 +6513,14 @@ KeybindSection2:AddBind({
 
 
 KeybindSection2:AddBind({
-    Name = "Explode Cached Missile",
+    Name = "保存ミサイル爆発",
     Default = "T",
     Hold = false,
     Save = true,
     Flag = "ExplodeCachedBombKeybind",
     Callback = function()
         if #bombList == 0 then 
-            OrionLib:MakeNotification({Name = "No bombs", Content = "There are no cached bombs to explode", Image = "rbxassetid://4483345998", Time = 2})
+            OrionLib:MakeNotification({Name = "爆弾なし", Content = "保存された爆弾がありません", Image = "rbxassetid://4483345998", Time = 2})
             return
         end
 
@@ -6528,7 +6528,7 @@ KeybindSection2:AddBind({
 
         local args = {
             [1] = {
-                ["Radius"] = 17.5,
+                ["範囲"] = 17.5,
                 ["TimeLength"] = 2,
                 ["Hitbox"] = bomb.PartHitDetector,
                 ["ExplodesByFire"] = false,
@@ -6545,21 +6545,21 @@ KeybindSection2:AddBind({
     end
 })
 KeybindSection2:AddBind({
-    Name = "Explode All Cached Missiles",
+    Name = "全保存ミサイル爆発",
     Default = "Y",
     Hold = false,
     Save = true,
     Flag = "ExplodeAllCachedBombsKeybind",
     Callback = function()
         if #bombList == 0 then 
-            OrionLib:MakeNotification({Name = "No bombs", Content = "There are no cached bombs to explode", Image = "rbxassetid://4483345998", Time = 2})
+            OrionLib:MakeNotification({Name = "爆弾なし", Content = "保存された爆弾がありません", Image = "rbxassetid://4483345998", Time = 2})
             return
         end
         for i = #bombList, 1, -1 do
             local bomb = table.remove(bombList, i)
             local args = {
                 [1] = {
-                    ["Radius"] = 17.5,
+                    ["範囲"] = 17.5,
                     ["TimeLength"] = 2,
                     ["Hitbox"] = bomb.PartHitDetector,
                     ["ExplodesByFire"] = false,
@@ -6578,14 +6578,14 @@ KeybindSection2:AddBind({
 })
 
 KeybindSection2:AddBind({
-    Name = "Explode All Cached Missiles On Nearest Player",
+    Name = "最寄りプレイヤーに全ミサイル発射",
     Default = "U",
     Hold = false,
     Save = true,
     Flag = "ExplodeAllCachedBombsOnNearestPlayerKeybind",
     Callback = function()
         if #bombList == 0 then 
-            OrionLib:MakeNotification({Name = "No bombs", Content = "There are no cached bombs to explode", Image = "rbxassetid://4483345998", Time = 2})
+            OrionLib:MakeNotification({Name = "爆弾なし", Content = "保存された爆弾がありません", Image = "rbxassetid://4483345998", Time = 2})
             return
         end
         local char = getNearestPlayer().Character
@@ -6593,7 +6593,7 @@ KeybindSection2:AddBind({
             local bomb = table.remove(bombList, i)
             local args = {
                 [1] = {
-                    ["Radius"] = 17.5,
+                    ["範囲"] = 17.5,
                     ["TimeLength"] = 2,
                     ["Hitbox"] = bomb.PartHitDetector,
                     ["ExplodesByFire"] = false,
@@ -6612,7 +6612,7 @@ KeybindSection2:AddBind({
 })
 
 KeybindSection2:AddToggle({
-    Name = "stupid dev thingy (ignore)",
+    Name = "開発用（無視）",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = false,
@@ -6700,7 +6700,7 @@ KeybindSection2:AddToggle({
 
 
 KeybindSection2:AddBind({
-    Name = "secret little keybind for dev (wont do anything for you)",
+    Name = "開発用キー（無効）",
     Default = "K",
     Hold = true,
     Save = true,
@@ -6721,7 +6721,7 @@ KeybindSection2:AddBind({
     end
 })
 KeybindSection2:AddBind({
-    Name = "another little keybind for dev (wont do anything for you)",
+    Name = "開発用キー2（無効）",
     Default = "J",
     Hold = true,
     Save = true,
@@ -6743,7 +6743,7 @@ KeybindSection2:AddBind({
 })
 
 ExplosionTab:AddDropdown({
-	Name = "Toy to load",
+	Name = "読み込むおもちゃ",
 	Default = "BombMissile",
 	Options = {"BombMissile", "FireworkMissile"},
 	Callback = function(Value)
@@ -6751,11 +6751,11 @@ ExplosionTab:AddDropdown({
 	end    
 })
 ExplosionTab:AddSlider({
-    Name = "Max amount of missiles",
+    Name = "最大ミサイル数",
     Min = 1,
     Max = localPlayer.ToysLimitCap.Value / 10,
     Color = Color3.fromRGB(240, 0, 0),
-    ValueName = "Missiles",
+    ValueName = "発",
     Increment = 1,
     Default = _G.MaxMissiles,
     Save = true,
@@ -6766,7 +6766,7 @@ ExplosionTab:AddSlider({
 })
 
 ExplosionTab:AddToggle({
-    Name = "Auto Reload Cache",
+    Name = "自動ミサイル補充",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
     Save = true,
@@ -6778,7 +6778,7 @@ ExplosionTab:AddToggle({
 DevTab:AddLabel("Spawn and eat a banana first!")
 
 DevTab:AddToggle({
-    Name = "Ragdoll All",
+    Name = "全員転倒",
     Color = Color3.fromRGB(240, 0, 0),
     Default = false,
     Save = true,
@@ -7916,7 +7916,7 @@ OrionLib:MakeNotification({
 -- ==============================================
 -- V2固有機能: Fun Toys / Misc
 -- ==============================================
-local V2FunTab = Window:MakeTab({Name = "Fun Toys", Icon = "rbxassetid://4483362458", PremiumOnly = false})
+local V2FunTab = Window:MakeTab({Name = "おもちゃ遊び", Icon = "rbxassetid://4483362458", PremiumOnly = false})
 
 V2FunTab:AddButton({
     Name = "無重力モード (0キーでON/OFF)",
@@ -8003,7 +8003,7 @@ V2FunTab:AddButton({
 })
 
 -- Sigma Misc
-local V2MiscTab = Window:MakeTab({Name = "Misc", Icon = "rbxassetid://4483362458", PremiumOnly = false})
+local V2MiscTab = Window:MakeTab({Name = "その他", Icon = "rbxassetid://4483362458", PremiumOnly = false})
 
 V2MiscTab:AddButton({
     Name = "FOVをデフォルトに戻す",
