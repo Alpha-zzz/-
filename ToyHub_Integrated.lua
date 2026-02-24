@@ -1383,7 +1383,7 @@ local function startFeatherLoop()
             return
         end
         
-        FeatherTime += dt * FeatherConfig.waveSpeed
+        FeatherTime = FeatherTime + (dt * FeatherConfig.waveSpeed)
         
         local charCFrame = humanoidRootPart.CFrame
         local rightVector = charCFrame.RightVector
@@ -1858,7 +1858,7 @@ local function startHeartLoop()
             return
         end
         
-        HeartTime += dt
+        HeartTime = HeartTime + (dt)
         
         local basePosition
         if HeartConfig.FollowPlayer then
@@ -2067,7 +2067,7 @@ local function startBigHeartLoop()
             return
         end
         
-        BigHeartTime += dt
+        BigHeartTime = BigHeartTime + (dt)
         
         local basePosition
         if BigHeartConfig.FollowPlayer then
@@ -2336,7 +2336,7 @@ local function startStarOfDavidLoop()
             return
         end
         
-        StarOfDavidTime += dt
+        StarOfDavidTime = StarOfDavidTime + (dt)
         
         local basePosition
         if StarOfDavidConfig.FollowPlayer then
@@ -2600,7 +2600,7 @@ local function startStarLoop()
             return
         end
         
-        StarTime += dt
+        StarTime = StarTime + (dt)
         
         local basePosition
         if StarConfig.FollowPlayer then
@@ -2876,7 +2876,7 @@ local function startSuperRingLoop()
             return
         end
         
-        SuperRingTime += dt
+        SuperRingTime = SuperRingTime + (dt)
         
         local basePosition
         if SuperRingConfig.FollowPlayer then
@@ -3170,7 +3170,7 @@ local function startManjiLoop()
             return
         end
         
-        ManjiTime += dt
+        ManjiTime = ManjiTime + (dt)
         
         local basePosition
         if ManjiConfig.FollowPlayer then
@@ -3462,7 +3462,7 @@ local function startStar2Loop()
             return
         end
         
-        Star2Time += dt
+        Star2Time = Star2Time + (dt)
         
         local basePosition
         if Star2Config.FollowPlayer then
@@ -8028,4 +8028,3 @@ OrionLib:Init()
 
 
 print("ToyHub Integrated - Loaded Successfully")
-
