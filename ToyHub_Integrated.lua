@@ -6215,11 +6215,11 @@ ScriptTab:AddButton({
     end
 })
 local KeybindSection = KeybindsTab:AddSection({Name = "プレイヤー操作キー"})
-KeybindSection:AddParagraph("ヒント", "Press while looking at a player")
+KeybindsTab:AddParagraph("ヒント", "Press while looking at a player")
 
-KeybindSection:AddBind({
+KeybindsTab:AddBind({
     Name = "地獄送り",
-    Default = "Z",
+    Default = Enum.KeyCode.Z,
     Hold = false,
     Save = true,
     Flag = "SendToHellKeybind",
@@ -6251,9 +6251,9 @@ KeybindSection:AddBind({
     end
 })
 
-KeybindSection:AddBind({
+KeybindsTab:AddBind({
     Name = "キック",
-    Default = "X",
+    Default = Enum.KeyCode.X,
     Hold = false,
     Save = true,
     Flag = "KickKeybind",
@@ -6291,7 +6291,7 @@ KeybindSection:AddBind({
     end
 })
 
-KeybindSection:AddDropdown({
+DevTab:AddDropdown({
     Name = "キックモード選択",
     Options = {"Sky", "Silent"},
     Default = "Silent",
@@ -6300,9 +6300,9 @@ KeybindSection:AddDropdown({
     end
 })
 
-KeybindSection:AddBind({
+KeybindsTab:AddBind({
     Name = "キル（不安定）",
-    Default = "C",
+    Default = Enum.KeyCode.C,
     Hold = false,
     Save = true,
     Flag = "KillKeybind",
@@ -6328,9 +6328,9 @@ KeybindSection:AddBind({
     end
 })
 
-KeybindSection:AddBind({
+KeybindsTab:AddBind({
     Name = "燃やす",
-    Default = "V",
+    Default = Enum.KeyCode.V,
     Hold = false,
     Save = true,
     Flag = "BurnKeybind",
@@ -6368,10 +6368,10 @@ KeybindSection:AddBind({
     end
 })
 local KeybindSection2 = KeybindsTab:AddSection({Name = "ミサイル操作キー"})
-KeybindSection2:AddParagraph("ヒント", "どこかを押してください")
-KeybindSection2:AddBind({
+KeybindsTab:AddParagraph("ヒント", "どこかを押してください")
+KeybindsTab:AddBind({
     Name = "爆弾爆発",
-    Default = "B",
+    Default = Enum.KeyCode.B,
     Hold = false,
     Save = true,
     Flag = "ExplodeBombKeybind",
@@ -6415,9 +6415,9 @@ KeybindSection2:AddBind({
         connection:Disconnect()
     end
 })
-KeybindSection2:AddBind({
+KeybindsTab:AddBind({
     Name = "爆弾投げ",
-    Default = "M",
+    Default = Enum.KeyCode.M,
     Hold = false,
     Save = true,
     Flag = "ThrowBombKeybind",
@@ -6449,9 +6449,9 @@ KeybindSection2:AddBind({
     end
 })
 
-KeybindSection2:AddBind({
+KeybindsTab:AddBind({
     Name = "花火爆発",
-    Default = "N",
+    Default = Enum.KeyCode.N,
     Hold = false,
     Save = true,
     Flag = "ExplodeFireworkKeybind",
@@ -6495,11 +6495,11 @@ KeybindSection2:AddBind({
         connection:Disconnect()
     end
 })
-KeybindSection2:AddParagraph("ヒント", "Hold to reload bombs")
+KeybindsTab:AddParagraph("ヒント", "Hold to reload bombs")
 
-KeybindSection2:AddBind({
+KeybindsTab:AddBind({
     Name = "ミサイル補充",
-    Default = "R",
+    Default = Enum.KeyCode.R,
     Hold = true,
     Save = true,
     Flag = "BombCacheReload",
@@ -6512,9 +6512,9 @@ KeybindSection2:AddBind({
 
 
 
-KeybindSection2:AddBind({
+KeybindsTab:AddBind({
     Name = "保存ミサイル爆発",
-    Default = "T",
+    Default = Enum.KeyCode.T,
     Hold = false,
     Save = true,
     Flag = "ExplodeCachedBombKeybind",
@@ -6544,9 +6544,9 @@ KeybindSection2:AddBind({
         ReplicatedStorage:WaitForChild("BombEvents"):WaitForChild("BombExplode"):FireServer(unpack(args))
     end
 })
-KeybindSection2:AddBind({
+KeybindsTab:AddBind({
     Name = "全保存ミサイル爆発",
-    Default = "Y",
+    Default = Enum.KeyCode.Y,
     Hold = false,
     Save = true,
     Flag = "ExplodeAllCachedBombsKeybind",
@@ -6577,9 +6577,9 @@ KeybindSection2:AddBind({
     end
 })
 
-KeybindSection2:AddBind({
+KeybindsTab:AddBind({
     Name = "最寄りプレイヤーに全ミサイル発射",
-    Default = "U",
+    Default = Enum.KeyCode.U,
     Hold = false,
     Save = true,
     Flag = "ExplodeAllCachedBombsOnNearestPlayerKeybind",
@@ -6611,7 +6611,7 @@ KeybindSection2:AddBind({
     end
 })
 
-KeybindSection2:AddToggle({
+DevTab:AddToggle({
     Name = "開発用（無視）",
     Default = false,
     Color = Color3.fromRGB(240, 0, 0),
@@ -6699,9 +6699,9 @@ KeybindSection2:AddToggle({
 })
 
 
-KeybindSection2:AddBind({
+KeybindsTab:AddBind({
     Name = "開発用キー（無効）",
-    Default = "K",
+    Default = Enum.KeyCode.K,
     Hold = true,
     Save = true,
     Flag = "LightBitSpeedUpDev",
@@ -6720,9 +6720,9 @@ KeybindSection2:AddBind({
 		end)
     end
 })
-KeybindSection2:AddBind({
+KeybindsTab:AddBind({
     Name = "開発用キー2（無効）",
-    Default = "J",
+    Default = Enum.KeyCode.J,
     Hold = true,
     Save = true,
     Flag = "LightBitRadiusUpDev",
@@ -7491,7 +7491,7 @@ V3ExplosionTab:AddSection({Name = "爆弾機能"})
 -- 爆弾爆発（Bキー）
 V3ExplosionTab:AddBind({
     Name = "爆弾爆発",
-    Default = "B",
+    Default = Enum.KeyCode.B,
     Hold = false,
     Callback = function()
         if ownedToys.BombMissile then
@@ -7553,7 +7553,7 @@ V3ExplosionTab:AddBind({
 -- 爆弾投げる（Cキー）
 V3ExplosionTab:AddBind({
     Name = "爆弾投げる",
-    Default = "C",
+    Default = Enum.KeyCode.C,
     Hold = false,
     Callback = function()
         if ownedToys.BombMissile then
@@ -7600,7 +7600,7 @@ V3ExplosionTab:AddBind({
 -- 花火爆発（Nキー）
 V3ExplosionTab:AddBind({
     Name = "花火爆発",
-    Default = "N",
+    Default = Enum.KeyCode.N,
     Hold = false,
     Callback = function()
         if ownedToys.FireworkMissile then
@@ -7667,7 +7667,7 @@ local cacheReloadCoroutine = nil
 
 V3ExplosionTab:AddBind({
     Name = "ミサイルキャッシュリロード",
-    Default = "Q",
+    Default = Enum.KeyCode.Q,
     Hold = true,
     Callback = function(isHolding)
         if isHolding then
@@ -7748,7 +7748,7 @@ V3ExplosionTab:AddBind({
 -- キャッシュミサイル爆発（Tキー）
 V3ExplosionTab:AddBind({
     Name = "キャッシュミサイル爆発",
-    Default = "T",
+    Default = Enum.KeyCode.T,
     Hold = false,
     Callback = function()
         if #bombList > 0 then
@@ -7790,7 +7790,7 @@ V3ExplosionTab:AddBind({
 -- 全キャッシュミサイル爆発（Yキー）
 V3ExplosionTab:AddBind({
     Name = "全キャッシュミサイル爆発",
-    Default = "Y",
+    Default = Enum.KeyCode.Y,
     Hold = false,
     Callback = function()
         if #bombList > 0 then
@@ -7834,7 +7834,7 @@ V3ExplosionTab:AddBind({
 -- 最寄りプレイヤーに全ミサイル爆発（Uキー）
 V3ExplosionTab:AddBind({
     Name = "最寄りプレイヤーに全ミサイル爆発",
-    Default = "U",
+    Default = Enum.KeyCode.U,
     Hold = false,
     Callback = function()
         if #bombList > 0 then
