@@ -995,6 +995,7 @@ local HeartAssignedToys = {}
 local HeartLoopConn = nil
 local HeartTime = 0
 
+do -- block1
 -- ====================================================================
 -- おっきぃ♡配置機能（大きいハート）- 速度設定を拡張
 -- ====================================================================
@@ -1982,6 +1983,8 @@ function toggleHeart(state)
     end
 end
 
+end -- block1
+do -- block2
 -- ====================================================================
 -- おっきぃ♡配置機能専用関数（大きいハート）- 速度拡張版
 -- ====================================================================
@@ -3825,6 +3828,8 @@ MainTab:AddButton({
     end
 })
 
+end -- block2
+do -- block3
 -- ====================================================================
 -- タブ2: 魔法陣［RingX2］
 -- ====================================================================
@@ -5104,6 +5109,8 @@ OrionLib:MakeNotification({
 
 -- テーマカスタマイズ（Init再帰バグ修正済み）
 
+end -- block3
+do -- block4
 -- ==============================================
 -- Scripture機能: Grab/Object/Defense/Aura/Fun系タブ
 -- ==============================================
@@ -6886,7 +6893,7 @@ char = player.Character
 humanoid = char:FindFirstChild("Humanoid")
     if not humanoid then return false end
     
-    -- リスポーン判定：Healthが100になった、またはキャラクターが再追加された
+    -- リスポーン判定：Healthが100になった��またはキャラクターが再追加された
     if humanoid.Health >= 100 and (tick() - target.LastRespawn) > 2 then
         target.LastRespawn = tick()
         target.BuggedUntil = 0  -- バグ状態をリセット
@@ -7396,6 +7403,8 @@ connection = nil
     end
 end)
 
+end -- block4
+do -- block5
 -- ==============================================
 -- AF_Hub V3: 戦闘/キル/爆発タブ
 -- ==============================================
@@ -8030,6 +8039,7 @@ V2MiscTab:AddSlider({
     end
 })
 OrionLib:Init()
+end -- block5
 
 
 print("ToyHub Integrated - Loaded Successfully")
