@@ -1614,7 +1614,7 @@ local function startRingLoop()
         
         for i, rec in ipairs(RingList) do
             local part = rec.part
-            if not part or not part.Parent then continue end
+            if part and part.Parent then
             
             -- 回転角度計算
             local angle = math.rad(i * angleIncrement + RingTAccum * 50)
@@ -1650,6 +1650,7 @@ local function startRingLoop()
                 local lookAtCFrame = CFrame.lookAt(targetPos, root.Position) * CFrame.Angles(0, math.pi, 0)
                 bg.CFrame = lookAtCFrame
             end
+            end -- if part and part.Parent
         end
     end)
 end
