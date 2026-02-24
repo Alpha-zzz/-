@@ -1080,14 +1080,15 @@ local SuperRingConfig = {
 
 local SuperRingToys = {}
 local SuperRingPoints = {}
+
 local SuperRingAssignedToys = {}
-local SuperRingLoopConn = nil
-local SuperRingTime = 0
+SuperRingLoopConn = nil
+SuperRingTime = 0
 
 -- ====================================================================
 -- 卍マンジ配置機能（追加）
 -- ====================================================================
-local ManjiConfig = {
+ManjiConfig = {
     Enabled = false,
     Height = 6.0,           -- 高さ
     Size = 8.0,             -- サイズ
@@ -1102,16 +1103,16 @@ local ManjiConfig = {
     ArmThickness = 0.3,     -- 腕の太さ
 }
 
-local ManjiToys = {}
-local ManjiPoints = {}
-local ManjiAssignedToys = {}
-local ManjiLoopConn = nil
-local ManjiTime = 0
+ManjiToys = {}
+ManjiPoints = {}
+ManjiAssignedToys = {}
+ManjiLoopConn = nil
+ManjiTime = 0
 
 -- ====================================================================
 -- スター2✫配置機能（追加 - 太陽のようなギザギザ模様）
 -- ====================================================================
-local Star2Config = {
+Star2Config = {
     Enabled = false,
     Height = 10.0,          -- 高さ
     Size = 15.0,            -- 基本サイズ
@@ -1130,27 +1131,27 @@ local Star2Config = {
     SizeMax = 30.0,         -- 最大サイズ
 }
 
-local Star2Toys = {}
-local Star2Points = {}
-local Star2AssignedToys = {}
-local Star2LoopConn = nil
-local Star2Time = 0
+Star2Toys = {}
+Star2Points = {}
+Star2AssignedToys = {}
+Star2LoopConn = nil
+Star2Time = 0
 
 -- ====================================================================
 -- 便利機能 (Mi(=^・^=))
 -- ====================================================================
-local UtilityConfig = {
+UtilityConfig = {
     InfiniteJump = false,
     Noclip = false,
 }
 
-local NoclipConnection = nil
-local OriginalCollision = {}
+NoclipConnection = nil
+OriginalCollision = {}
 
 -- ====================================================================
 -- 共通ユーティリティ関数
 -- ====================================================================
-local function findFireworkSparklers()
+function findFireworkSparklers()
     local toys = {}
     
     for _, item in ipairs(workspace:GetDescendants()) do
@@ -1175,14 +1176,14 @@ local function findFireworkSparklers()
     return toys
 end
 
-local function getPrimaryPart(model)
+function getPrimaryPart(model)
     if model.PrimaryPart then
         return model.PrimaryPart
     end
     
-    local potentialParts = {"Handle", "Main", "Part", "Base", "Sparkler", "Firework"}
+potentialParts = {"Handle", "Main", "Part", "Base", "Sparkler", "Firework"}
     for _, partName in ipairs(potentialParts) do
-        local part = model:FindFirstChild(partName)
+part = model:FindFirstChild(partName)
         if part and part:IsA("BasePart") then
             return part
         end
@@ -1200,7 +1201,7 @@ end
 -- ====================================================================
 -- Noclip修正関数
 -- ====================================================================
-local function enableNoclip()
+function enableNoclip()
     if NoclipConnection then
         NoclipConnection:Disconnect()
         NoclipConnection = nil
@@ -1228,7 +1229,7 @@ local function enableNoclip()
     end)
 end
 
-local function disableNoclip()
+function disableNoclip()
     if NoclipConnection then
         NoclipConnection:Disconnect()
         NoclipConnection = nil
@@ -1248,17 +1249,17 @@ end
 -- ====================================================================
 -- 羽（Feather）機能専用関数
 -- ====================================================================
-local function createFeatherRowPoints(count)
+function createFeatherRowPoints(count)
     local points = {}
     
     if count == 0 then return points end
     
-    local totalWidth = (count - 1) * FeatherConfig.spacing
-    local startX = -totalWidth / 2
+totalWidth = (count - 1) * FeatherConfig.spacing
+startX = -totalWidth / 2
     
     for i = 1, count do
-        local x = startX + (i - 1) * FeatherConfig.spacing
-        local part = Instance.new("Part")
+x = startX + (i - 1) * FeatherConfig.spacing
+part = Instance.new("Part")
         part.CanCollide = false
         part.Anchored = true
         part.Transparency = 1
@@ -1275,11 +1276,11 @@ local function createFeatherRowPoints(count)
     return points
 end
 
-local function attachFeatherPhysics(part)
+function attachFeatherPhysics(part)
     if not part then return nil, nil end
     
-    local existingBG = part:FindFirstChildOfClass("BodyGyro")
-    local existingBP = part:FindFirstChildOfClass("BodyPosition")
+existingBG = part:FindFirstChildOfClass("BodyGyro")
+existingBP = part:FindFirstChildOfClass("BodyPosition")
     
     if existingBG and existingBP then 
         return existingBG, existingBP
@@ -1288,8 +1289,8 @@ local function attachFeatherPhysics(part)
     if existingBG then existingBG:Destroy() end
     if existingBP then existingBP:Destroy() end
     
-    local BP = Instance.new("BodyPosition")  
-    local BG = Instance.new("BodyGyro")  
+BP = Instance.new("BodyPosition")  
+BG = Instance.new("BodyGyro")  
     
     BP.P = 15000  
     BP.D = 200  
@@ -1304,7 +1305,7 @@ local function attachFeatherPhysics(part)
     return BG, BP
 end
 
-local function assignFeatherToysToPoints()
+function assignFeatherToysToPoints()
     FeatherAssignedToys = {}
     local distanceGroups = {}
     
@@ -1317,7 +1318,7 @@ local function assignFeatherToysToPoints()
         table.insert(distanceGroups[absDistance], i)
     end
     
-    local sortedDistances = {}
+sortedDistances = {}
     for distance, _ in pairs(distanceGroups) do
         table.insert(sortedDistances, distance)
     end
@@ -1330,9 +1331,9 @@ local function assignFeatherToysToPoints()
     end
     
     for i = 1, math.min(#FeatherToys, #FeatherRowPoints) do
-        local toy = FeatherToys[i]
+toy = FeatherToys[i]
         if toy and toy:IsA("Model") and toy.Name == "FireworkSparkler" then
-            local primaryPart = getPrimaryPart(toy)
+primaryPart = getPrimaryPart(toy)
             
             if primaryPart then  
                 for _, child in ipairs(toy:GetChildren()) do  
@@ -1343,8 +1344,8 @@ local function assignFeatherToysToPoints()
                     end  
                 end
                 
-                local BG, BP = attachFeatherPhysics(primaryPart)  
-                local toyTable = {  
+BG, BP = attachFeatherPhysics(primaryPart)  
+toyTable = {  
                     BG = BG,  
                     BP = BP,  
                     Pallet = primaryPart,
@@ -1363,7 +1364,7 @@ local function assignFeatherToysToPoints()
     return FeatherAssignedToys
 end
 
-local function startFeatherLoop()
+function startFeatherLoop()
     if FeatherLoopConn then
         FeatherLoopConn:Disconnect()
         FeatherLoopConn = nil
@@ -1376,8 +1377,8 @@ local function startFeatherLoop()
             return
         end
         
-        local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
+humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
         
         if not humanoidRootPart or not torso then
             return
@@ -1385,26 +1386,26 @@ local function startFeatherLoop()
         
         FeatherTime = FeatherTime + (dt * FeatherConfig.waveSpeed)
         
-        local charCFrame = humanoidRootPart.CFrame
-        local rightVector = charCFrame.RightVector
-        local lookVector = charCFrame.LookVector
+charCFrame = humanoidRootPart.CFrame
+rightVector = charCFrame.RightVector
+lookVector = charCFrame.LookVector
         
         -- 背中側に配置するために、前方ではなく後方にオフセット
-        local backVector = -lookVector
+backVector = -lookVector
         
-        local basePosition = torso.Position + 
+basePosition = torso.Position + 
                              Vector3.new(0, FeatherConfig.heightOffset, 0) + 
                              (backVector * FeatherConfig.backwardOffset)
         
         for i, point in ipairs(FeatherRowPoints) do
             if point.assignedToy and point.assignedToy.BP and point.assignedToy.BG then
-                local toy = point.assignedToy
+toy = point.assignedToy
                 
-                local targetPosition = basePosition + (rightVector * toy.offsetX)
+targetPosition = basePosition + (rightVector * toy.offsetX)
                 
-                local amplitude = FeatherConfig.baseAmplitude * toy.distanceRank
-                local waveMovement = math.sin(FeatherTime) * amplitude
-                local finalPosition = targetPosition + Vector3.new(0, waveMovement, 0)
+amplitude = FeatherConfig.baseAmplitude * toy.distanceRank
+waveMovement = math.sin(FeatherTime) * amplitude
+finalPosition = targetPosition + Vector3.new(0, waveMovement, 0)
                 
                 if point.part then
                     point.part.Position = finalPosition
@@ -1413,12 +1414,12 @@ local function startFeatherLoop()
                 toy.BP.Position = finalPosition
                 
                 -- プレイヤーの背中側を向くように修正
-                local backYRotation = math.atan2(-lookVector.X, -lookVector.Z)
-                local baseCFrame = CFrame.new(finalPosition) * CFrame.Angles(0, backYRotation, 0)
-                local tiltedCFrame = baseCFrame * CFrame.Angles(math.rad(-FeatherConfig.tiltAngle), 0, 0)
+backYRotation = math.atan2(-lookVector.X, -lookVector.Z)
+baseCFrame = CFrame.new(finalPosition) * CFrame.Angles(0, backYRotation, 0)
+tiltedCFrame = baseCFrame * CFrame.Angles(math.rad(-FeatherConfig.tiltAngle), 0, 0)
                 
-                local currentCFrame = toy.BG.CFrame
-                local interpolatedCFrame = currentCFrame:Lerp(tiltedCFrame, 0.3)
+currentCFrame = toy.BG.CFrame
+interpolatedCFrame = currentCFrame:Lerp(tiltedCFrame, 0.3)
                 
                 toy.BG.CFrame = interpolatedCFrame
             end
@@ -1426,7 +1427,7 @@ local function startFeatherLoop()
     end)
 end
 
-local function stopFeatherLoop()
+function stopFeatherLoop()
     if FeatherLoopConn then
         FeatherLoopConn:Disconnect()
         FeatherLoopConn = nil
@@ -1451,7 +1452,7 @@ local function stopFeatherLoop()
     FeatherAssignedToys = {}
 end
 
-local function toggleFeather(state)
+function toggleFeather(state)
     FeatherConfig.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -1505,12 +1506,12 @@ end
 -- ====================================================================
 -- 魔法陣［RingX2］機能専用関数
 -- ====================================================================
-local function HRP()
+function HRP()
     local c = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
     return c:FindFirstChild("HumanoidRootPart")
 end
 
-local function attachRingPhysics(rec)
+function attachRingPhysics(rec)
     local model = rec.model
     local part = rec.part
     if not model or not part or not part.Parent then return end
@@ -1526,7 +1527,7 @@ local function attachRingPhysics(rec)
     
     -- BodyVelocity追加
     if not part:FindFirstChild("RingBodyVelocity") then
-        local bv = Instance.new("BodyVelocity")
+bv = Instance.new("BodyVelocity")
         bv.Name = "RingBodyVelocity"
         bv.MaxForce = Vector3.new(1e8, 1e8, 1e8)
         bv.Velocity = Vector3.new()
@@ -1536,7 +1537,7 @@ local function attachRingPhysics(rec)
     
     -- BodyGyro追加
     if not part:FindFirstChild("RingBodyGyro") then
-        local bg = Instance.new("BodyGyro")
+bg = Instance.new("BodyGyro")
         bg.Name = "RingBodyGyro"
         bg.MaxTorque = Vector3.new(1e8, 1e8, 1e8)
         bg.CFrame = part.CFrame
@@ -1545,15 +1546,15 @@ local function attachRingPhysics(rec)
     end
 end
 
-local function detachRingPhysics(rec)
+function detachRingPhysics(rec)
     local model = rec.model
     local part = rec.part
     if not model or not part then return end
     
-    local bv = part:FindFirstChild("RingBodyVelocity")
+bv = part:FindFirstChild("RingBodyVelocity")
     if bv then bv:Destroy() end
     
-    local bg = part:FindFirstChild("RingBodyGyro")
+bg = part:FindFirstChild("RingBodyGyro")
     if bg then bg:Destroy() end
     
     for _, p in ipairs(model:GetDescendants()) do
@@ -1565,21 +1566,21 @@ local function detachRingPhysics(rec)
     end
 end
 
-local function rescanRing()
+function rescanRing()
     for _, r in ipairs(RingList) do
         detachRingPhysics(r)
     end
     RingList = {}
     
-    local foundCount = 0
+foundCount = 0
     
     for _, d in ipairs(workspace:GetDescendants()) do
         if foundCount >= RingConfig.ObjectCount then break end
         
         if d:IsA("Model") and d.Name == "FireworkSparkler" then
-            local part = getPrimaryPart(d)
+part = getPrimaryPart(d)
             if part and not part.Anchored then
-                local rec = { model = d, part = part }
+rec = { model = d, part = part }
                 table.insert(RingList, rec)
                 foundCount = foundCount + 1
             end
@@ -1591,7 +1592,7 @@ local function rescanRing()
     end
 end
 
-local function startRingLoop()
+function startRingLoop()
     if RingLoopConn then
         RingLoopConn:Disconnect()
         RingLoopConn = nil
@@ -1601,43 +1602,43 @@ local function startRingLoop()
     RingLoopConn = RunService.Heartbeat:Connect(function(dt)
         if not RingConfig.Enabled then return end
         
-        local root = HRP()
+root = HRP()
         if not root or #RingList == 0 then return end
         
         RingTAccum = RingTAccum + dt * (RingConfig.RotationSpeed / 10)
         
-        local radius = RingConfig.RingDiameter / 2
-        local angleIncrement = 360 / #RingList
+radius = RingConfig.RingDiameter / 2
+angleIncrement = 360 / #RingList
         
         -- HRPの速度を取得 (飛行中も追従させるため)
-        local rootVelocity = root.AssemblyLinearVelocity or root.Velocity or Vector3.new()
+rootVelocity = root.AssemblyLinearVelocity or root.Velocity or Vector3.new()
         
         for i, rec in ipairs(RingList) do
-            local part = rec.part
+part = rec.part
             if part and part.Parent then
             
             -- 回転角度計算
-            local angle = math.rad(i * angleIncrement + RingTAccum * 50)
+angle = math.rad(i * angleIncrement + RingTAccum * 50)
             
             -- リング上の位置計算 (HRPの向きに関係なく水平リングを維持)
-            local localPos = Vector3.new(
+localPos = Vector3.new(
                 radius * math.cos(angle),
                 RingConfig.RingHeight,
                 radius * math.sin(angle)
             )
             
             -- ワールド座標での目標位置 (HRPの回転を無視して水平を維持)
-            local targetPos = root.Position + localPos
+targetPos = root.Position + localPos
             
             -- BodyVelocityで移動 (飛行中の速度も加算)
-            local dir = targetPos - part.Position
-            local distance = dir.Magnitude
-            local bv = part:FindFirstChild("RingBodyVelocity")
+dir = targetPos - part.Position
+distance = dir.Magnitude
+bv = part:FindFirstChild("RingBodyVelocity")
             
             if bv then
                 if distance > 0.1 then
                     -- HRPの速度を加算して飛行中も追従
-                    local moveVelocity = dir.Unit * math.min(3000, distance * 50)
+moveVelocity = dir.Unit * math.min(3000, distance * 50)
                     bv.Velocity = moveVelocity + rootVelocity
                 else
                     bv.Velocity = rootVelocity
@@ -1645,9 +1646,9 @@ local function startRingLoop()
             end
             
             -- BodyGyroで回転 (外側を向く)
-            local bg = part:FindFirstChild("RingBodyGyro")
+bg = part:FindFirstChild("RingBodyGyro")
             if bg then
-                local lookAtCFrame = CFrame.lookAt(targetPos, root.Position) * CFrame.Angles(0, math.pi, 0)
+lookAtCFrame = CFrame.lookAt(targetPos, root.Position) * CFrame.Angles(0, math.pi, 0)
                 bg.CFrame = lookAtCFrame
             end
             end -- if part and part.Parent
@@ -1655,7 +1656,7 @@ local function startRingLoop()
     end)
 end
 
-local function stopRingLoop()
+function stopRingLoop()
     if RingLoopConn then
         RingLoopConn:Disconnect()
         RingLoopConn = nil
@@ -1666,7 +1667,7 @@ local function stopRingLoop()
     RingList = {}
 end
 
-local function toggleRingAura(state)
+function toggleRingAura(state)
     RingConfig.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -1717,17 +1718,17 @@ end
 -- ====================================================================
 -- ハート形配置機能専用関数
 -- ====================================================================
-local function createHeartPoints(count)
+function createHeartPoints(count)
     local points = {}
     
     if count == 0 then return points end
     
     for i = 1, count do
         -- ハート曲線に沿った角度を計算
-        local t = (i - 1) * (2 * math.pi / count)
+t = (i - 1) * (2 * math.pi / count)
         
         -- 参考点用パート
-        local part = Instance.new("Part")
+part = Instance.new("Part")
         part.CanCollide = false
         part.Anchored = true
         part.Transparency = 1
@@ -1744,7 +1745,7 @@ local function createHeartPoints(count)
     return points
 end
 
-local function getHeartPosition(t, size, pulse, scale, verticalStretch)
+function getHeartPosition(t, size, pulse, scale, verticalStretch)
     -- ハート曲線のパラメトリック方程式
     -- x = 16 * sin^3(t)
     -- y = 13 * cos(t) - 5 * cos(2t) - 2 * cos(3t) - cos(4t)
@@ -1765,7 +1766,7 @@ local function getHeartPosition(t, size, pulse, scale, verticalStretch)
     
     -- 脈動効果を加える
     if pulse > 0 then
-        local pulseFactor = 1 + (pulse * 0.1)
+pulseFactor = 1 + (pulse * 0.1)
         x = x * pulseFactor
         y = y * pulseFactor
     end
@@ -1773,11 +1774,11 @@ local function getHeartPosition(t, size, pulse, scale, verticalStretch)
     return x, y
 end
 
-local function attachHeartPhysics(part)
+function attachHeartPhysics(part)
     if not part then return nil, nil end
     
-    local existingBG = part:FindFirstChildOfClass("BodyGyro")
-    local existingBP = part:FindFirstChildOfClass("BodyPosition")
+existingBG = part:FindFirstChildOfClass("BodyGyro")
+existingBP = part:FindFirstChildOfClass("BodyPosition")
     
     if existingBG and existingBP then 
         return existingBG, existingBP
@@ -1786,8 +1787,8 @@ local function attachHeartPhysics(part)
     if existingBG then existingBG:Destroy() end
     if existingBP then existingBP:Destroy() end
     
-    local BP = Instance.new("BodyPosition")  
-    local BG = Instance.new("BodyGyro")  
+BP = Instance.new("BodyPosition")  
+BG = Instance.new("BodyGyro")  
     
     BP.P = 15000  
     BP.D = 200  
@@ -1802,7 +1803,7 @@ local function attachHeartPhysics(part)
     return BG, BP
 end
 
-local function assignHeartToysToPoints()
+function assignHeartToysToPoints()
     HeartAssignedToys = {}
     
     for i = 1, math.min(#HeartToys, #HeartPoints) do
@@ -1819,8 +1820,8 @@ local function assignHeartToysToPoints()
                     end  
                 end
                 
-                local BG, BP = attachHeartPhysics(primaryPart)  
-                local toyTable = {  
+BG, BP = attachHeartPhysics(primaryPart)  
+toyTable = {  
                     BG = BG,  
                     BP = BP,  
                     Pallet = primaryPart,
@@ -1838,7 +1839,7 @@ local function assignHeartToysToPoints()
     return HeartAssignedToys
 end
 
-local function startHeartLoop()
+function startHeartLoop()
     if HeartLoopConn then
         HeartLoopConn:Disconnect()
         HeartLoopConn = nil
@@ -1851,8 +1852,8 @@ local function startHeartLoop()
             return
         end
         
-        local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
+humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
         
         if not humanoidRootPart or not torso then
             return
@@ -1860,7 +1861,7 @@ local function startHeartLoop()
         
         HeartTime = HeartTime + (dt)
         
-        local basePosition
+basePosition = nil
         if HeartConfig.FollowPlayer then
             basePosition = torso.Position
         else
@@ -1869,28 +1870,28 @@ local function startHeartLoop()
         end
         
         -- 脈動効果の計算
-        local pulseEffect = 0
+pulseEffect = 0
         if HeartConfig.PulseSpeed > 0 then
             pulseEffect = math.sin(HeartTime * HeartConfig.PulseSpeed) * HeartConfig.PulseAmplitude
         end
         
         for i, point in ipairs(HeartPoints) do
             if point.assignedToy and point.assignedToy.BP and point.assignedToy.BG then
-                local toy = point.assignedToy
+toy = point.assignedToy
                 
                 -- 回転角度を計算（時間経過で回転）
-                local currentAngle = toy.baseAngle + (HeartTime * HeartConfig.RotationSpeed)
+currentAngle = toy.baseAngle + (HeartTime * HeartConfig.RotationSpeed)
                 
                 -- ハート曲線上の位置を計算
-                local x, y = getHeartPosition(currentAngle, HeartConfig.Size, pulseEffect, 1, 1)
+x, y = getHeartPosition(currentAngle, HeartConfig.Size, pulseEffect, 1, 1)
                 
                 -- 高さ調整（少しランダムな高さで立体的に）
-                local heightOffset = HeartConfig.Height + (math.sin(currentAngle * 2) * 0.5)
+heightOffset = HeartConfig.Height + (math.sin(currentAngle * 2) * 0.5)
                 
                 -- 最終的な位置（上から見た時にハート形になるようXZ平面で配置）
-                local localPos = Vector3.new(x, heightOffset, y)
+localPos = Vector3.new(x, heightOffset, y)
                 
-                local targetPosition = basePosition + localPos
+targetPosition = basePosition + localPos
                 
                 if point.part then
                     point.part.Position = targetPosition
@@ -1905,7 +1906,7 @@ local function startHeartLoop()
     end)
 end
 
-local function stopHeartLoop()
+function stopHeartLoop()
     if HeartLoopConn then
         HeartLoopConn:Disconnect()
         HeartLoopConn = nil
@@ -1930,7 +1931,7 @@ local function stopHeartLoop()
     HeartAssignedToys = {}
 end
 
-local function toggleHeart(state)
+function toggleHeart(state)
     HeartConfig.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -1984,17 +1985,17 @@ end
 -- ====================================================================
 -- おっきぃ♡配置機能専用関数（大きいハート）- 速度拡張版
 -- ====================================================================
-local function createBigHeartPoints(count)
+function createBigHeartPoints(count)
     local points = {}
     
     if count == 0 then return points end
     
     for i = 1, count do
         -- ハート曲線に沿った角度を計算
-        local t = (i - 1) * (2 * math.pi / count)
+t = (i - 1) * (2 * math.pi / count)
         
         -- 参考点用パート
-        local part = Instance.new("Part")
+part = Instance.new("Part")
         part.CanCollide = false
         part.Anchored = true
         part.Transparency = 1
@@ -2011,7 +2012,7 @@ local function createBigHeartPoints(count)
     return points
 end
 
-local function assignBigHeartToysToPoints()
+function assignBigHeartToysToPoints()
     BigHeartAssignedToys = {}
     
     for i = 1, math.min(#BigHeartToys, #BigHeartPoints) do
@@ -2028,8 +2029,8 @@ local function assignBigHeartToysToPoints()
                     end  
                 end
                 
-                local BG, BP = attachHeartPhysics(primaryPart)  
-                local toyTable = {  
+BG, BP = attachHeartPhysics(primaryPart)  
+toyTable = {  
                     BG = BG,  
                     BP = BP,  
                     Pallet = primaryPart,
@@ -2047,7 +2048,7 @@ local function assignBigHeartToysToPoints()
     return BigHeartAssignedToys
 end
 
-local function startBigHeartLoop()
+function startBigHeartLoop()
     if BigHeartLoopConn then
         BigHeartLoopConn:Disconnect()
         BigHeartLoopConn = nil
@@ -2060,8 +2061,8 @@ local function startBigHeartLoop()
             return
         end
         
-        local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
+humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
         
         if not humanoidRootPart or not torso then
             return
@@ -2069,7 +2070,7 @@ local function startBigHeartLoop()
         
         BigHeartTime = BigHeartTime + (dt)
         
-        local basePosition
+basePosition = nil
         if BigHeartConfig.FollowPlayer then
             basePosition = torso.Position
         else
@@ -2078,20 +2079,20 @@ local function startBigHeartLoop()
         end
         
         -- 脈動効果の計算（拡張された速度範囲）
-        local pulseEffect = 0
+pulseEffect = 0
         if BigHeartConfig.PulseSpeed > 0 then
             pulseEffect = math.sin(BigHeartTime * BigHeartConfig.PulseSpeed) * BigHeartConfig.PulseAmplitude
         end
         
         for i, point in ipairs(BigHeartPoints) do
             if point.assignedToy and point.assignedToy.BP and point.assignedToy.BG then
-                local toy = point.assignedToy
+toy = point.assignedToy
                 
                 -- 回転角度を計算（拡張された速度範囲）
-                local currentAngle = toy.baseAngle + (BigHeartTime * BigHeartConfig.RotationSpeed)
+currentAngle = toy.baseAngle + (BigHeartTime * BigHeartConfig.RotationSpeed)
                 
                 -- 大きなハート曲線上の位置を計算
-                local x, y = getHeartPosition(
+x, y = getHeartPosition(
                     currentAngle, 
                     BigHeartConfig.Size, 
                     pulseEffect, 
@@ -2100,12 +2101,12 @@ local function startBigHeartLoop()
                 )
                 
                 -- 高さ調整（大きいハートなので高さも大きめ）
-                local heightOffset = BigHeartConfig.Height + (math.sin(currentAngle * 2) * 1.0)
+heightOffset = BigHeartConfig.Height + (math.sin(currentAngle * 2) * 1.0)
                 
                 -- 最終的な位置（上から見た時にハート形になるようXZ平面で配置）
-                local localPos = Vector3.new(x, heightOffset, y)
+localPos = Vector3.new(x, heightOffset, y)
                 
-                local targetPosition = basePosition + localPos
+targetPosition = basePosition + localPos
                 
                 if point.part then
                     point.part.Position = targetPosition
@@ -2120,7 +2121,7 @@ local function startBigHeartLoop()
     end)
 end
 
-local function stopBigHeartLoop()
+function stopBigHeartLoop()
     if BigHeartLoopConn then
         BigHeartLoopConn:Disconnect()
         BigHeartLoopConn = nil
@@ -2145,7 +2146,7 @@ local function stopBigHeartLoop()
     BigHeartAssignedToys = {}
 end
 
-local function toggleBigHeart(state)
+function toggleBigHeart(state)
     BigHeartConfig.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -2199,17 +2200,17 @@ end
 -- ====================================================================
 -- ダビデ星配置機能専用関数
 -- ====================================================================
-local function createStarOfDavidPoints(count)
+function createStarOfDavidPoints(count)
     local points = {}
     
     if count == 0 then return points end
     
     for i = 1, count do
         -- 6角形の頂点に配置（2つの正三角形を重ねた形）
-        local angle = (i - 1) * (2 * math.pi / 6)
+angle = (i - 1) * (2 * math.pi / 6)
         
         -- 参考点用パート
-        local part = Instance.new("Part")
+part = Instance.new("Part")
         part.CanCollide = false
         part.Anchored = true
         part.Transparency = 1
@@ -2227,7 +2228,7 @@ local function createStarOfDavidPoints(count)
     return points
 end
 
-local function getStarOfDavidPosition(i, angle, size, triangleHeight, time, pulseSpeed)
+function getStarOfDavidPosition(i, angle, size, triangleHeight, time, pulseSpeed)
     local scale = size / 10
     
     -- 基本的な六角形の位置
@@ -2245,16 +2246,16 @@ local function getStarOfDavidPosition(i, angle, size, triangleHeight, time, puls
     end
     
     -- 脈動効果
-    local pulse = math.sin(time * pulseSpeed) * 0.1
+pulse = math.sin(time * pulseSpeed) * 0.1
     
     return baseX, baseZ, heightOffset + pulse
 end
 
-local function attachStarOfDavidPhysics(part)
+function attachStarOfDavidPhysics(part)
     if not part then return nil, nil end
     
-    local existingBG = part:FindFirstChildOfClass("BodyGyro")
-    local existingBP = part:FindFirstChildOfClass("BodyPosition")
+existingBG = part:FindFirstChildOfClass("BodyGyro")
+existingBP = part:FindFirstChildOfClass("BodyPosition")
     
     if existingBG and existingBP then 
         return existingBG, existingBP
@@ -2263,8 +2264,8 @@ local function attachStarOfDavidPhysics(part)
     if existingBG then existingBG:Destroy() end
     if existingBP then existingBP:Destroy() end
     
-    local BP = Instance.new("BodyPosition")  
-    local BG = Instance.new("BodyGyro")  
+BP = Instance.new("BodyPosition")  
+BG = Instance.new("BodyGyro")  
     
     BP.P = 15000  
     BP.D = 200  
@@ -2279,7 +2280,7 @@ local function attachStarOfDavidPhysics(part)
     return BG, BP
 end
 
-local function assignStarOfDavidToysToPoints()
+function assignStarOfDavidToysToPoints()
     StarOfDavidAssignedToys = {}
     
     for i = 1, math.min(#StarOfDavidToys, #StarOfDavidPoints) do
@@ -2296,8 +2297,8 @@ local function assignStarOfDavidToysToPoints()
                     end  
                 end
                 
-                local BG, BP = attachStarOfDavidPhysics(primaryPart)  
-                local toyTable = {  
+BG, BP = attachStarOfDavidPhysics(primaryPart)  
+toyTable = {  
                     BG = BG,  
                     BP = BP,  
                     Pallet = primaryPart,
@@ -2316,7 +2317,7 @@ local function assignStarOfDavidToysToPoints()
     return StarOfDavidAssignedToys
 end
 
-local function startStarOfDavidLoop()
+function startStarOfDavidLoop()
     if StarOfDavidLoopConn then
         StarOfDavidLoopConn:Disconnect()
         StarOfDavidLoopConn = nil
@@ -2329,8 +2330,8 @@ local function startStarOfDavidLoop()
             return
         end
         
-        local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
+humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
         
         if not humanoidRootPart or not torso then
             return
@@ -2338,7 +2339,7 @@ local function startStarOfDavidLoop()
         
         StarOfDavidTime = StarOfDavidTime + (dt)
         
-        local basePosition
+basePosition = nil
         if StarOfDavidConfig.FollowPlayer then
             basePosition = torso.Position
         else
@@ -2347,23 +2348,23 @@ local function startStarOfDavidLoop()
         
         for i, point in ipairs(StarOfDavidPoints) do
             if point.assignedToy and point.assignedToy.BP and point.assignedToy.BG then
-                local toy = point.assignedToy
+toy = point.assignedToy
                 
                 -- 回転角度を計算
-                local currentAngle = toy.baseAngle + (StarOfDavidTime * StarOfDavidConfig.RotationSpeed)
+currentAngle = toy.baseAngle + (StarOfDavidTime * StarOfDavidConfig.RotationSpeed)
                 
                 -- ダビデ星の位置を計算
-                local x, z, heightOffset = getStarOfDavidPosition(
+x, z, heightOffset = getStarOfDavidPosition(
                     i, currentAngle, StarOfDavidConfig.Size, 
                     StarOfDavidConfig.TriangleHeight, StarOfDavidTime, StarOfDavidConfig.PulseSpeed
                 )
                 
                 -- 最終的な高さ
-                local finalHeight = StarOfDavidConfig.Height + heightOffset
+finalHeight = StarOfDavidConfig.Height + heightOffset
                 
                 -- 最終的な位置
-                local localPos = Vector3.new(x, finalHeight, z)
-                local targetPosition = basePosition + localPos
+localPos = Vector3.new(x, finalHeight, z)
+targetPosition = basePosition + localPos
                 
                 if point.part then
                     point.part.Position = targetPosition
@@ -2372,9 +2373,9 @@ local function startStarOfDavidLoop()
                 toy.BP.Position = targetPosition
                 
                 -- 外側を向く
-                local direction = (targetPosition - basePosition).Unit
+direction = (targetPosition - basePosition).Unit
                 if direction.Magnitude > 0 then
-                    local lookCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
+lookCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
                     toy.BG.CFrame = lookCFrame
                 end
             end
@@ -2382,7 +2383,7 @@ local function startStarOfDavidLoop()
     end)
 end
 
-local function stopStarOfDavidLoop()
+function stopStarOfDavidLoop()
     if StarOfDavidLoopConn then
         StarOfDavidLoopConn:Disconnect()
         StarOfDavidLoopConn = nil
@@ -2407,7 +2408,7 @@ local function stopStarOfDavidLoop()
     StarOfDavidAssignedToys = {}
 end
 
-local function toggleStarOfDavid(state)
+function toggleStarOfDavid(state)
     StarOfDavidConfig.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -2461,18 +2462,18 @@ end
 -- ====================================================================
 -- スター配置機能専用関数（⭐️の形）
 -- ====================================================================
-local function createStarPoints(count)
+function createStarPoints(count)
     local points = {}
     
     if count == 0 then return points end
     
     for i = 1, count do
         -- 星の頂点に沿って配置（10個の頂点：5つの外側頂点と5つの内側頂点）
-        local starIndex = (i - 1) % 10  -- 0-9
-        local isOuter = starIndex % 2 == 0  -- 外側頂点（0,2,4,6,8）
+starIndex = (i - 1) % 10  -- 0-9
+isOuter = starIndex % 2 == 0  -- 外側頂点（0,2,4,6,8）
         
         -- 参考点用パート
-        local part = Instance.new("Part")
+part = Instance.new("Part")
         part.CanCollide = false
         part.Anchored = true
         part.Transparency = 1
@@ -2490,7 +2491,7 @@ local function createStarPoints(count)
     return points
 end
 
-local function getStarPosition(starIndex, isOuter, outerRadius, innerRadius, time, rotationSpeed, twinkleSpeed)
+function getStarPosition(starIndex, isOuter, outerRadius, innerRadius, time, rotationSpeed, twinkleSpeed)
     -- 星の角度（5角星なので72度間隔）
     local anglePerPoint = 2 * math.pi / 5
     local pointAngle = starIndex * (anglePerPoint / 2)  -- 内側と外側が交互になる
@@ -2514,11 +2515,11 @@ local function getStarPosition(starIndex, isOuter, outerRadius, innerRadius, tim
     return x, z, pointAngle
 end
 
-local function attachStarPhysics(part)
+function attachStarPhysics(part)
     if not part then return nil, nil end
     
-    local existingBG = part:FindFirstChildOfClass("BodyGyro")
-    local existingBP = part:FindFirstChildOfClass("BodyPosition")
+existingBG = part:FindFirstChildOfClass("BodyGyro")
+existingBP = part:FindFirstChildOfClass("BodyPosition")
     
     if existingBG and existingBP then 
         return existingBG, existingBP
@@ -2527,8 +2528,8 @@ local function attachStarPhysics(part)
     if existingBG then existingBG:Destroy() end
     if existingBP then existingBP:Destroy() end
     
-    local BP = Instance.new("BodyPosition")  
-    local BG = Instance.new("BodyGyro")  
+BP = Instance.new("BodyPosition")  
+BG = Instance.new("BodyGyro")  
     
     BP.P = 15000  
     BP.D = 200  
@@ -2543,7 +2544,7 @@ local function attachStarPhysics(part)
     return BG, BP
 end
 
-local function assignStarToysToPoints()
+function assignStarToysToPoints()
     StarAssignedToys = {}
     
     for i = 1, math.min(#StarToys, #StarPoints) do
@@ -2560,8 +2561,8 @@ local function assignStarToysToPoints()
                     end  
                 end
                 
-                local BG, BP = attachStarPhysics(primaryPart)  
-                local toyTable = {  
+BG, BP = attachStarPhysics(primaryPart)  
+toyTable = {  
                     BG = BG,  
                     BP = BP,  
                     Pallet = primaryPart,
@@ -2580,7 +2581,7 @@ local function assignStarToysToPoints()
     return StarAssignedToys
 end
 
-local function startStarLoop()
+function startStarLoop()
     if StarLoopConn then
         StarLoopConn:Disconnect()
         StarLoopConn = nil
@@ -2593,8 +2594,8 @@ local function startStarLoop()
             return
         end
         
-        local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
+humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
         
         if not humanoidRootPart or not torso then
             return
@@ -2602,7 +2603,7 @@ local function startStarLoop()
         
         StarTime = StarTime + (dt)
         
-        local basePosition
+basePosition = nil
         if StarConfig.FollowPlayer then
             basePosition = torso.Position
         else
@@ -2611,22 +2612,23 @@ local function startStarLoop()
         
         for i, point in ipairs(StarPoints) do
             if point.assignedToy and point.assignedToy.BP and point.assignedToy.BG then
-                local toy = point.assignedToy
+toy = point.assignedToy
                 
                 -- 星の位置を計算
-                local x, z, pointAngle = getStarPosition(
+x, z, pointAngle = getStarPosition(
                     toy.starIndex, toy.isOuter, 
                     StarConfig.OuterRadius, StarConfig.InnerRadius,
                     StarTime, StarConfig.RotationSpeed, StarConfig.TwinkleSpeed
                 )
                 
                 -- 高さ調整（星の頂点によって少し変化）
-                local heightVariation = math.sin(pointAngle * 3) * 0.5
-                local finalHeight = StarConfig.Height + heightVariation
+heightVariation = math.sin(pointAngle * 3) * 0.5
+
+finalHeight = StarConfig.Height + heightVariation
                 
                 -- 最終的な位置
-                local localPos = Vector3.new(x, finalHeight, z)
-                local targetPosition = basePosition + localPos
+localPos = Vector3.new(x, finalHeight, z)
+targetPosition = basePosition + localPos
                 
                 if point.part then
                     point.part.Position = targetPosition
@@ -2635,9 +2637,9 @@ local function startStarLoop()
                 toy.BP.Position = targetPosition
                 
                 -- 星の中心から外側を向く
-                local direction = (targetPosition - basePosition).Unit
+direction = (targetPosition - basePosition).Unit
                 if direction.Magnitude > 0 then
-                    local lookCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
+lookCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
                     toy.BG.CFrame = lookCFrame
                 end
             end
@@ -2645,7 +2647,7 @@ local function startStarLoop()
     end)
 end
 
-local function stopStarLoop()
+function stopStarLoop()
     if StarLoopConn then
         StarLoopConn:Disconnect()
         StarLoopConn = nil
@@ -2670,7 +2672,7 @@ local function stopStarLoop()
     StarAssignedToys = {}
 end
 
-local function toggleStar(state)
+function toggleStar(state)
     StarConfig.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -2724,17 +2726,17 @@ end
 -- ====================================================================
 -- スーパーリング（竜巻）配置機能専用関数
 -- ====================================================================
-local function createSuperRingPoints(count)
+function createSuperRingPoints(count)
     local points = {}
     
     if count == 0 then return points end
     
     for i = 1, count do
         -- らせんに沿った角度を計算
-        local angle = (i - 1) * (2 * math.pi / count)
+angle = (i - 1) * (2 * math.pi / count)
         
         -- 参考点用パート
-        local part = Instance.new("Part")
+part = Instance.new("Part")
         part.CanCollide = false
         part.Anchored = true
         part.Transparency = 1
@@ -2752,7 +2754,7 @@ local function createSuperRingPoints(count)
     return points
 end
 
-local function getSuperRingPosition(angle, radius, heightOffset, time, rotationSpeed, spiralSpeed, waveSpeed, waveAmplitude, tornadoEffect)
+function getSuperRingPosition(angle, radius, heightOffset, time, rotationSpeed, spiralSpeed, waveSpeed, waveAmplitude, tornadoEffect)
     -- 基本の円周上の位置
     local x = math.cos(angle) * radius
     local z = math.sin(angle) * radius
@@ -2769,32 +2771,32 @@ local function getSuperRingPosition(angle, radius, heightOffset, time, rotationS
     end
     
     -- 波の効果
-    local waveOffset = 0
+waveOffset = 0
     if waveSpeed > 0 then
         waveOffset = math.sin(time * waveSpeed + angle * 2) * waveAmplitude
     end
     
     -- 竜巻効果（半径が高さによって変わる）
-    local currentRadius = radius
+currentRadius = radius
     if tornadoEffect then
         -- 高くなるほど半径が小さくなる
-        local heightFactor = 1 - (heightOffset / SuperRingConfig.Height) * 0.5
+heightFactor = 1 - (heightOffset / SuperRingConfig.Height) * 0.5
         currentRadius = radius * heightFactor
         x = math.cos(rotationAngle) * currentRadius
         z = math.sin(rotationAngle) * currentRadius
     end
     
     -- 最終的な高さ
-    local finalHeight = SuperRingConfig.BaseHeight + heightOffset + spiralOffset + waveOffset
+finalHeight = SuperRingConfig.BaseHeight + heightOffset + spiralOffset + waveOffset
     
     return x, z, finalHeight, currentRadius
 end
 
-local function attachSuperRingPhysics(part)
+function attachSuperRingPhysics(part)
     if not part then return nil, nil end
     
-    local existingBG = part:FindFirstChildOfClass("BodyGyro")
-    local existingBP = part:FindFirstChildOfClass("BodyPosition")
+existingBG = part:FindFirstChildOfClass("BodyGyro")
+existingBP = part:FindFirstChildOfClass("BodyPosition")
     
     if existingBG and existingBP then 
         return existingBG, existingBP
@@ -2803,8 +2805,8 @@ local function attachSuperRingPhysics(part)
     if existingBG then existingBG:Destroy() end
     if existingBP then existingBP:Destroy() end
     
-    local BP = Instance.new("BodyPosition")  
-    local BG = Instance.new("BodyGyro")  
+BP = Instance.new("BodyPosition")  
+BG = Instance.new("BodyGyro")  
     
     BP.P = 15000  
     BP.D = 200  
@@ -2819,7 +2821,7 @@ local function attachSuperRingPhysics(part)
     return BG, BP
 end
 
-local function assignSuperRingToysToPoints()
+function assignSuperRingToysToPoints()
     SuperRingAssignedToys = {}
     
     for i = 1, math.min(#SuperRingToys, #SuperRingPoints) do
@@ -2836,8 +2838,8 @@ local function assignSuperRingToysToPoints()
                     end  
                 end
                 
-                local BG, BP = attachSuperRingPhysics(primaryPart)  
-                local toyTable = {  
+BG, BP = attachSuperRingPhysics(primaryPart)  
+toyTable = {  
                     BG = BG,  
                     BP = BP,  
                     Pallet = primaryPart,
@@ -2856,7 +2858,7 @@ local function assignSuperRingToysToPoints()
     return SuperRingAssignedToys
 end
 
-local function startSuperRingLoop()
+function startSuperRingLoop()
     if SuperRingLoopConn then
         SuperRingLoopConn:Disconnect()
         SuperRingLoopConn = nil
@@ -2869,8 +2871,8 @@ local function startSuperRingLoop()
             return
         end
         
-        local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
+humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
         
         if not humanoidRootPart or not torso then
             return
@@ -2878,7 +2880,7 @@ local function startSuperRingLoop()
         
         SuperRingTime = SuperRingTime + (dt)
         
-        local basePosition
+basePosition = nil
         if SuperRingConfig.FollowPlayer then
             basePosition = torso.Position
         else
@@ -2887,21 +2889,21 @@ local function startSuperRingLoop()
         
         for i, point in ipairs(SuperRingPoints) do
             if point.assignedToy and point.assignedToy.BP and point.assignedToy.BG then
-                local toy = point.assignedToy
+toy = point.assignedToy
                 
                 -- 角度を計算
-                local currentAngle = toy.baseAngle + (SuperRingTime * SuperRingConfig.RotationSpeed * 0.5)
+currentAngle = toy.baseAngle + (SuperRingTime * SuperRingConfig.RotationSpeed * 0.5)
                 
                 -- スーパーリングの位置を計算
-                local x, z, height, radius = getSuperRingPosition(
+x, z, height, radius = getSuperRingPosition(
                     currentAngle, SuperRingConfig.Radius, toy.baseHeightOffset,
                     SuperRingTime, SuperRingConfig.RotationSpeed, SuperRingConfig.SpiralSpeed,
                     SuperRingConfig.WaveSpeed, SuperRingConfig.WaveAmplitude, SuperRingConfig.TornadoEffect
                 )
                 
                 -- 最終的な位置
-                local localPos = Vector3.new(x, height, z)
-                local targetPosition = basePosition + localPos
+localPos = Vector3.new(x, height, z)
+targetPosition = basePosition + localPos
                 
                 if point.part then
                     point.part.Position = targetPosition
@@ -2911,9 +2913,9 @@ local function startSuperRingLoop()
                 
                 -- 竜巻効果がある場合、外側を向く
                 if SuperRingConfig.TornadoEffect then
-                    local direction = (targetPosition - basePosition).Unit
+direction = (targetPosition - basePosition).Unit
                     if direction.Magnitude > 0 then
-                        local lookCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
+lookCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
                         toy.BG.CFrame = lookCFrame
                     end
                 else
@@ -2925,7 +2927,7 @@ local function startSuperRingLoop()
     end)
 end
 
-local function stopSuperRingLoop()
+function stopSuperRingLoop()
     if SuperRingLoopConn then
         SuperRingLoopConn:Disconnect()
         SuperRingLoopConn = nil
@@ -2950,7 +2952,7 @@ local function stopSuperRingLoop()
     SuperRingAssignedToys = {}
 end
 
-local function toggleSuperRing(state)
+function toggleSuperRing(state)
     SuperRingConfig.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -3004,17 +3006,17 @@ end
 -- ====================================================================
 -- 卍マンジ配置機能専用関数（追加）
 -- ====================================================================
-local function createManjiPoints(count)
+function createManjiPoints(count)
     local points = {}
     
     if count == 0 then return points end
     
     for i = 1, count do
         -- 卍の形に沿った角度を計算
-        local t = (i - 1) * (2 * math.pi / count)
+t = (i - 1) * (2 * math.pi / count)
         
         -- 参考点用パート
-        local part = Instance.new("Part")
+part = Instance.new("Part")
         part.CanCollide = false
         part.Anchored = true
         part.Transparency = 1
@@ -3031,7 +3033,7 @@ local function createManjiPoints(count)
     return points
 end
 
-local function getManjiPosition(t, size, pulse, armLength, armThickness)
+function getManjiPosition(t, size, pulse, armLength, armThickness)
     -- 卍の形を計算する関数
     -- 基本的な円形に、4つの腕を追加
     
@@ -3061,14 +3063,14 @@ local function getManjiPosition(t, size, pulse, armLength, armThickness)
     end
     
     -- 腕の位置を計算
-    local armFactor = 0
+armFactor = 0
     if minDiff < (math.pi / 8) then  -- 腕の角度付近
         armFactor = (1 - (minDiff / (math.pi / 8))) * armLength
         
         -- 腕の幅方向の調整
-        local perpendicularAngle = closestArm + math.pi / 2
-        local perpX = math.cos(perpendicularAngle) * armThickness
-        local perpZ = math.sin(perpendicularAngle) * armThickness
+perpendicularAngle = closestArm + math.pi / 2
+perpX = math.cos(perpendicularAngle) * armThickness
+perpZ = math.sin(perpendicularAngle) * armThickness
         
         -- 基本位置に腕の位置を追加
         baseX = baseX + math.cos(closestArm) * armFactor + perpX
@@ -3077,7 +3079,7 @@ local function getManjiPosition(t, size, pulse, armLength, armThickness)
     
     -- 脈動効果
     if pulse > 0 then
-        local pulseFactor = 1 + (pulse * 0.05)
+pulseFactor = 1 + (pulse * 0.05)
         baseX = baseX * pulseFactor
         baseZ = baseZ * pulseFactor
     end
@@ -3085,11 +3087,11 @@ local function getManjiPosition(t, size, pulse, armLength, armThickness)
     return baseX, baseZ
 end
 
-local function attachManjiPhysics(part)
+function attachManjiPhysics(part)
     if not part then return nil, nil end
     
-    local existingBG = part:FindFirstChildOfClass("BodyGyro")
-    local existingBP = part:FindFirstChildOfClass("BodyPosition")
+existingBG = part:FindFirstChildOfClass("BodyGyro")
+existingBP = part:FindFirstChildOfClass("BodyPosition")
     
     if existingBG and existingBP then 
         return existingBG, existingBP
@@ -3098,8 +3100,8 @@ local function attachManjiPhysics(part)
     if existingBG then existingBG:Destroy() end
     if existingBP then existingBP:Destroy() end
     
-    local BP = Instance.new("BodyPosition")  
-    local BG = Instance.new("BodyGyro")  
+BP = Instance.new("BodyPosition")  
+BG = Instance.new("BodyGyro")  
     
     BP.P = 15000  
     BP.D = 200  
@@ -3114,7 +3116,7 @@ local function attachManjiPhysics(part)
     return BG, BP
 end
 
-local function assignManjiToysToPoints()
+function assignManjiToysToPoints()
     ManjiAssignedToys = {}
     
     for i = 1, math.min(#ManjiToys, #ManjiPoints) do
@@ -3131,8 +3133,8 @@ local function assignManjiToysToPoints()
                     end  
                 end
                 
-                local BG, BP = attachManjiPhysics(primaryPart)  
-                local toyTable = {  
+BG, BP = attachManjiPhysics(primaryPart)  
+toyTable = {  
                     BG = BG,  
                     BP = BP,  
                     Pallet = primaryPart,
@@ -3150,7 +3152,7 @@ local function assignManjiToysToPoints()
     return ManjiAssignedToys
 end
 
-local function startManjiLoop()
+function startManjiLoop()
     if ManjiLoopConn then
         ManjiLoopConn:Disconnect()
         ManjiLoopConn = nil
@@ -3163,8 +3165,8 @@ local function startManjiLoop()
             return
         end
         
-        local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
+humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
         
         if not humanoidRootPart or not torso then
             return
@@ -3172,7 +3174,7 @@ local function startManjiLoop()
         
         ManjiTime = ManjiTime + (dt)
         
-        local basePosition
+basePosition = nil
         if ManjiConfig.FollowPlayer then
             basePosition = torso.Position
         else
@@ -3180,20 +3182,20 @@ local function startManjiLoop()
         end
         
         -- 脈動効果の計算
-        local pulseEffect = 0
+pulseEffect = 0
         if ManjiConfig.PulseSpeed > 0 then
             pulseEffect = math.sin(ManjiTime * ManjiConfig.PulseSpeed) * ManjiConfig.PulseAmplitude
         end
         
         for i, point in ipairs(ManjiPoints) do
             if point.assignedToy and point.assignedToy.BP and point.assignedToy.BG then
-                local toy = point.assignedToy
+toy = point.assignedToy
                 
                 -- 回転角度を計算（時間経過で回転）
-                local currentAngle = toy.baseAngle + (ManjiTime * ManjiConfig.RotationSpeed)
+currentAngle = toy.baseAngle + (ManjiTime * ManjiConfig.RotationSpeed)
                 
                 -- 卍の形の位置を計算
-                local x, z = getManjiPosition(
+x, z = getManjiPosition(
                     currentAngle, 
                     ManjiConfig.Size, 
                     pulseEffect,
@@ -3202,11 +3204,11 @@ local function startManjiLoop()
                 )
                 
                 -- 高さ調整
-                local heightOffset = ManjiConfig.Height + (math.sin(currentAngle * 2) * 0.3)
+heightOffset = ManjiConfig.Height + (math.sin(currentAngle * 2) * 0.3)
                 
                 -- 最終的な位置
-                local localPos = Vector3.new(x, heightOffset, z)
-                local targetPosition = basePosition + localPos
+localPos = Vector3.new(x, heightOffset, z)
+targetPosition = basePosition + localPos
                 
                 if point.part then
                     point.part.Position = targetPosition
@@ -3215,9 +3217,9 @@ local function startManjiLoop()
                 toy.BP.Position = targetPosition
                 
                 -- 外側を向く
-                local direction = (targetPosition - basePosition).Unit
+direction = (targetPosition - basePosition).Unit
                 if direction.Magnitude > 0 then
-                    local lookCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
+lookCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
                     toy.BG.CFrame = lookCFrame
                 end
             end
@@ -3225,7 +3227,7 @@ local function startManjiLoop()
     end)
 end
 
-local function stopManjiLoop()
+function stopManjiLoop()
     if ManjiLoopConn then
         ManjiLoopConn:Disconnect()
         ManjiLoopConn = nil
@@ -3250,7 +3252,7 @@ local function stopManjiLoop()
     ManjiAssignedToys = {}
 end
 
-local function toggleManji(state)
+function toggleManji(state)
     ManjiConfig.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -3304,17 +3306,17 @@ end
 -- ====================================================================
 -- スター2✫配置機能専用関数（追加 - 太陽のようなギザギザ模様）
 -- ====================================================================
-local function createStar2Points(count)
+function createStar2Points(count)
     local points = {}
     
     if count == 0 then return points end
     
     for i = 1, count do
         -- 光線に沿った角度を計算
-        local t = (i - 1) * (2 * math.pi / count)
+t = (i - 1) * (2 * math.pi / count)
         
         -- 参考点用パート
-        local part = Instance.new("Part")
+part = Instance.new("Part")
         part.CanCollide = false
         part.Anchored = true
         part.Transparency = 1
@@ -3332,7 +3334,7 @@ local function createStar2Points(count)
     return points
 end
 
-local function getStar2Position(t, size, pulse, rayLength, rayIndex, time, jitterSpeed, jitterAmount)
+function getStar2Position(t, size, pulse, rayLength, rayIndex, time, jitterSpeed, jitterAmount)
     -- 太陽のようなギザギザ模様を計算
     local scale = size / 10
     
@@ -3356,31 +3358,31 @@ local function getStar2Position(t, size, pulse, rayLength, rayIndex, time, jitte
         rayFactor = (1 - (angleDiff / (anglePerRay / 4))) * rayLength
         
         -- ギザギザ効果（揺れ）
-        local jitter = math.sin(time * jitterSpeed + rayIndex) * jitterAmount
+jitter = math.sin(time * jitterSpeed + rayIndex) * jitterAmount
         rayFactor = rayFactor * (1 + jitter * 0.1)
     end
     
     -- 脈動効果
-    local pulseFactor = 1
+pulseFactor = 1
     if pulse > 0 then
         pulseFactor = 1 + (pulse * 0.1)
     end
     
     -- 最終的な半径
-    local finalRadius = (baseRadius + rayFactor) * pulseFactor
+finalRadius = (baseRadius + rayFactor) * pulseFactor
     
     -- 位置を計算
-    local x = math.cos(t) * finalRadius
-    local z = math.sin(t) * finalRadius
+x = math.cos(t) * finalRadius
+z = math.sin(t) * finalRadius
     
     return x, z, finalRadius
 end
 
-local function attachStar2Physics(part)
+function attachStar2Physics(part)
     if not part then return nil, nil end
     
-    local existingBG = part:FindFirstChildOfClass("BodyGyro")
-    local existingBP = part:FindFirstChildOfClass("BodyPosition")
+existingBG = part:FindFirstChildOfClass("BodyGyro")
+existingBP = part:FindFirstChildOfClass("BodyPosition")
     
     if existingBG and existingBP then 
         return existingBG, existingBP
@@ -3389,8 +3391,8 @@ local function attachStar2Physics(part)
     if existingBG then existingBG:Destroy() end
     if existingBP then existingBP:Destroy() end
     
-    local BP = Instance.new("BodyPosition")  
-    local BG = Instance.new("BodyGyro")  
+BP = Instance.new("BodyPosition")  
+BG = Instance.new("BodyGyro")  
     
     BP.P = 20000  -- より高い値で高速移動に対応
     BP.D = 300
@@ -3405,7 +3407,7 @@ local function attachStar2Physics(part)
     return BG, BP
 end
 
-local function assignStar2ToysToPoints()
+function assignStar2ToysToPoints()
     Star2AssignedToys = {}
     
     for i = 1, math.min(#Star2Toys, #Star2Points) do
@@ -3422,8 +3424,8 @@ local function assignStar2ToysToPoints()
                     end  
                 end
                 
-                local BG, BP = attachStar2Physics(primaryPart)  
-                local toyTable = {  
+BG, BP = attachStar2Physics(primaryPart)  
+toyTable = {  
                     BG = BG,  
                     BP = BP,  
                     Pallet = primaryPart,
@@ -3442,7 +3444,7 @@ local function assignStar2ToysToPoints()
     return Star2AssignedToys
 end
 
-local function startStar2Loop()
+function startStar2Loop()
     if Star2LoopConn then
         Star2LoopConn:Disconnect()
         Star2LoopConn = nil
@@ -3455,8 +3457,8 @@ local function startStar2Loop()
             return
         end
         
-        local humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
+humanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+torso = LocalPlayer.Character:FindFirstChild("Torso") or LocalPlayer.Character:FindFirstChild("UpperTorso")
         
         if not humanoidRootPart or not torso then
             return
@@ -3464,7 +3466,7 @@ local function startStar2Loop()
         
         Star2Time = Star2Time + (dt)
         
-        local basePosition
+basePosition = nil
         if Star2Config.FollowPlayer then
             basePosition = torso.Position
         else
@@ -3472,20 +3474,20 @@ local function startStar2Loop()
         end
         
         -- 高速脈動効果の計算
-        local pulseEffect = 0
+pulseEffect = 0
         if Star2Config.PulseSpeed > 0 then
             pulseEffect = math.sin(Star2Time * Star2Config.PulseSpeed) * Star2Config.PulseAmplitude
         end
         
         for i, point in ipairs(Star2Points) do
             if point.assignedToy and point.assignedToy.BP and point.assignedToy.BG then
-                local toy = point.assignedToy
+toy = point.assignedToy
                 
                 -- 高速回転角度を計算
-                local currentAngle = toy.baseAngle + (Star2Time * Star2Config.RotationSpeed)
+currentAngle = toy.baseAngle + (Star2Time * Star2Config.RotationSpeed)
                 
                 -- スター2（太陽）の位置を計算
-                local x, z, radius = getStar2Position(
+x, z, radius = getStar2Position(
                     currentAngle, 
                     Star2Config.Size, 
                     pulseEffect,
@@ -3497,12 +3499,12 @@ local function startStar2Loop()
                 )
                 
                 -- 高さ調整（揺れ効果）
-                local heightVariation = math.sin(Star2Time * 3 + toy.rayIndex) * 0.5
-                local heightOffset = Star2Config.Height + heightVariation
+heightVariation = math.sin(Star2Time * 3 + toy.rayIndex) * 0.5
+heightOffset = Star2Config.Height + heightVariation
                 
                 -- 最終的な位置
-                local localPos = Vector3.new(x, heightOffset, z)
-                local targetPosition = basePosition + localPos
+localPos = Vector3.new(x, heightOffset, z)
+targetPosition = basePosition + localPos
                 
                 if point.part then
                     point.part.Position = targetPosition
@@ -3512,11 +3514,11 @@ local function startStar2Loop()
                 toy.BP.Position = targetPosition
                 
                 -- 外側を向く（高速回転用に滑らかに）
-                local direction = (targetPosition - basePosition).Unit
+direction = (targetPosition - basePosition).Unit
                 if direction.Magnitude > 0 then
-                    local currentCFrame = toy.BG.CFrame
-                    local targetCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
-                    local interpolatedCFrame = currentCFrame:Lerp(targetCFrame, 0.5)  -- 高速用に補間率を上げる
+currentCFrame = toy.BG.CFrame
+targetCFrame = CFrame.lookAt(targetPosition, targetPosition + direction)
+interpolatedCFrame = currentCFrame:Lerp(targetCFrame, 0.5)  -- 高速用に補間率を上げる
                     toy.BG.CFrame = interpolatedCFrame
                 end
             end
@@ -3524,7 +3526,7 @@ local function startStar2Loop()
     end)
 end
 
-local function stopStar2Loop()
+function stopStar2Loop()
     if Star2LoopConn then
         Star2LoopConn:Disconnect()
         Star2LoopConn = nil
@@ -3549,7 +3551,7 @@ local function stopStar2Loop()
     Star2AssignedToys = {}
 end
 
-local function toggleStar2(state)
+function toggleStar2(state)
     Star2Config.Enabled = state
     if state then
         -- 他の機能を停止（同時に両方は動作しない）
@@ -3603,7 +3605,7 @@ end
 -- ====================================================================
 -- 便利機能 (Mi(=^・^=))
 -- ====================================================================
-local function toggleInfiniteJump(state)
+function toggleInfiniteJump(state)
     UtilityConfig.InfiniteJump = state
     
     if state then
@@ -3634,7 +3636,7 @@ local function toggleInfiniteJump(state)
     end
 end
 
-local function toggleNoclip(state)
+function toggleNoclip(state)
     UtilityConfig.Noclip = state
     
     if state then
@@ -3661,7 +3663,7 @@ end
 -- ====================================================================
 -- Orion UI作成
 -- ====================================================================
-local Window = OrionLib:MakeWindow({
+Window = OrionLib:MakeWindow({
     Name = "🌸 さくらhub + Scripture 統合版 🌸",
     HidePremium = true,
     SaveConfig = false,
@@ -3674,7 +3676,7 @@ local Window = OrionLib:MakeWindow({
 -- ====================================================================
 -- タブ1: 羽[Feather]
 -- ====================================================================
-local MainTab = Window:MakeTab({
+MainTab = Window:MakeTab({
     Name = "羽[Feather]",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
@@ -3689,7 +3691,7 @@ MainTab:AddToggle({
     end
 })
 
-local FeatherSection1 = MainTab:AddSection({
+FeatherSection1 = MainTab:AddSection({
     Name = "配置設定"
 })
 
@@ -3755,7 +3757,7 @@ MainTab:AddSlider({
     end
 })
 
-local FeatherSection2 = MainTab:AddSection({
+FeatherSection2 = MainTab:AddSection({
     Name = "角度設定"
 })
 
@@ -3772,7 +3774,7 @@ MainTab:AddSlider({
     end
 })
 
-local FeatherSection3 = MainTab:AddSection({
+FeatherSection3 = MainTab:AddSection({
     Name = "上下動設定"
 })
 
@@ -3802,7 +3804,7 @@ MainTab:AddSlider({
     end
 })
 
-local FeatherSection4 = MainTab:AddSection({
+FeatherSection4 = MainTab:AddSection({
     Name = "その他"
 })
 
@@ -3826,13 +3828,13 @@ MainTab:AddButton({
 -- ====================================================================
 -- タブ2: 魔法陣［RingX2］
 -- ====================================================================
-local RingTab = Window:MakeTab({
+RingTab = Window:MakeTab({
     Name = "魔法陣［RingX2］",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local RingSection1 = RingTab:AddSection({
+RingSection1 = RingTab:AddSection({
     Name = "魔法陣基本設定"
 })
 
@@ -3886,7 +3888,7 @@ RingTab:AddSlider({
     end
 })
 
-local RingSection2 = RingTab:AddSection({
+RingSection2 = RingTab:AddSection({
     Name = "魔法陣回転設定"
 })
 
@@ -3906,13 +3908,13 @@ RingTab:AddSlider({
 -- ====================================================================
 -- タブ3: ♡ハート♡
 -- ====================================================================
-local HeartTab = Window:MakeTab({
+HeartTab = Window:MakeTab({
     Name = "♡ハート♡",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local HeartSection1 = HeartTab:AddSection({
+HeartSection1 = HeartTab:AddSection({
     Name = "基本設定"
 })
 
@@ -3932,7 +3934,7 @@ HeartTab:AddToggle({
     end
 })
 
-local HeartSection2 = HeartTab:AddSection({
+HeartSection2 = HeartTab:AddSection({
     Name = "サイズ設定"
 })
 
@@ -3980,7 +3982,7 @@ HeartTab:AddSlider({
     end
 })
 
-local HeartSection3 = HeartTab:AddSection({
+HeartSection3 = HeartTab:AddSection({
     Name = "動き設定"
 })
 
@@ -4023,7 +4025,7 @@ HeartTab:AddSlider({
     end
 })
 
-local HeartSection4 = HeartTab:AddSection({
+HeartSection4 = HeartTab:AddSection({
     Name = "制御"
 })
 
@@ -4047,13 +4049,13 @@ HeartTab:AddButton({
 -- ====================================================================
 -- タブ4: おっきぃ♡（大きいハート）- 速度拡張版
 -- ====================================================================
-local BigHeartTab = Window:MakeTab({
+BigHeartTab = Window:MakeTab({
     Name = "おっきぃ♡",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local BigHeartSection1 = BigHeartTab:AddSection({
+BigHeartSection1 = BigHeartTab:AddSection({
     Name = "基本設定"
 })
 
@@ -4073,7 +4075,7 @@ BigHeartTab:AddToggle({
     end
 })
 
-local BigHeartSection2 = BigHeartTab:AddSection({
+BigHeartSection2 = BigHeartTab:AddSection({
     Name = "サイズ設定（大きい）"
 })
 
@@ -4147,7 +4149,7 @@ BigHeartTab:AddSlider({
     end
 })
 
-local BigHeartSection3 = BigHeartTab:AddSection({
+BigHeartSection3 = BigHeartTab:AddSection({
     Name = "動き設定（高速対応）"
 })
 
@@ -4190,7 +4192,7 @@ BigHeartTab:AddSlider({
     end
 })
 
-local BigHeartSection4 = BigHeartTab:AddSection({
+BigHeartSection4 = BigHeartTab:AddSection({
     Name = "制御"
 })
 
@@ -4214,13 +4216,13 @@ BigHeartTab:AddButton({
 -- ====================================================================
 -- タブ5: ダビデ✡
 -- ====================================================================
-local StarOfDavidTab = Window:MakeTab({
+StarOfDavidTab = Window:MakeTab({
     Name = "ダビデ✡",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local StarOfDavidSection1 = StarOfDavidTab:AddSection({
+StarOfDavidSection1 = StarOfDavidTab:AddSection({
     Name = "基本設定"
 })
 
@@ -4240,7 +4242,7 @@ StarOfDavidTab:AddToggle({
     end
 })
 
-local StarOfDavidSection2 = StarOfDavidTab:AddSection({
+StarOfDavidSection2 = StarOfDavidTab:AddSection({
     Name = "サイズ設定"
 })
 
@@ -4301,7 +4303,7 @@ StarOfDavidTab:AddSlider({
     end
 })
 
-local StarOfDavidSection3 = StarOfDavidTab:AddSection({
+StarOfDavidSection3 = StarOfDavidTab:AddSection({
     Name = "動き設定"
 })
 
@@ -4331,7 +4333,7 @@ StarOfDavidTab:AddSlider({
     end
 })
 
-local StarOfDavidSection4 = StarOfDavidTab:AddSection({
+StarOfDavidSection4 = StarOfDavidTab:AddSection({
     Name = "制御"
 })
 
@@ -4355,13 +4357,13 @@ StarOfDavidTab:AddButton({
 -- ====================================================================
 -- タブ6: スター★（⭐️の形）
 -- ====================================================================
-local StarTab = Window:MakeTab({
+StarTab = Window:MakeTab({
     Name = "スター★",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local StarSection1 = StarTab:AddSection({
+StarSection1 = StarTab:AddSection({
     Name = "基本設定"
 })
 
@@ -4381,7 +4383,7 @@ StarTab:AddToggle({
     end
 })
 
-local StarSection2 = StarTab:AddSection({
+StarSection2 = StarTab:AddSection({
     Name = "サイズ設定"
 })
 
@@ -4442,7 +4444,7 @@ StarTab:AddSlider({
     end
 })
 
-local StarSection3 = StarTab:AddSection({
+StarSection3 = StarTab:AddSection({
     Name = "動き設定"
 })
 
@@ -4472,7 +4474,7 @@ StarTab:AddSlider({
     end
 })
 
-local StarSection4 = StarTab:AddSection({
+StarSection4 = StarTab:AddSection({
     Name = "制御"
 })
 
@@ -4496,13 +4498,13 @@ StarTab:AddButton({
 -- ====================================================================
 -- タブ7: SuperRing
 -- ====================================================================
-local SuperRingTab = Window:MakeTab({
+SuperRingTab = Window:MakeTab({
     Name = "SuperRing",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local SuperRingSection1 = SuperRingTab:AddSection({
+SuperRingSection1 = SuperRingTab:AddSection({
     Name = "基本設定"
 })
 
@@ -4530,7 +4532,7 @@ SuperRingTab:AddToggle({
     end
 })
 
-local SuperRingSection2 = SuperRingTab:AddSection({
+SuperRingSection2 = SuperRingTab:AddSection({
     Name = "サイズ設定"
 })
 
@@ -4596,7 +4598,7 @@ SuperRingTab:AddSlider({
     end
 })
 
-local SuperRingSection3 = SuperRingTab:AddSection({
+SuperRingSection3 = SuperRingTab:AddSection({
     Name = "動き設定"
 })
 
@@ -4652,7 +4654,7 @@ SuperRingTab:AddSlider({
     end
 })
 
-local SuperRingSection4 = SuperRingTab:AddSection({
+SuperRingSection4 = SuperRingTab:AddSection({
     Name = "制御"
 })
 
@@ -4676,13 +4678,13 @@ SuperRingTab:AddButton({
 -- ====================================================================
 -- タブ8: 卍マンジ（追加）
 -- ====================================================================
-local ManjiTab = Window:MakeTab({
+ManjiTab = Window:MakeTab({
     Name = "卍マンジ",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local ManjiSection1 = ManjiTab:AddSection({
+ManjiSection1 = ManjiTab:AddSection({
     Name = "基本設定"
 })
 
@@ -4702,7 +4704,7 @@ ManjiTab:AddToggle({
     end
 })
 
-local ManjiSection2 = ManjiTab:AddSection({
+ManjiSection2 = ManjiTab:AddSection({
     Name = "サイズ設定"
 })
 
@@ -4776,7 +4778,7 @@ ManjiTab:AddSlider({
     end
 })
 
-local ManjiSection3 = ManjiTab:AddSection({
+ManjiSection3 = ManjiTab:AddSection({
     Name = "動き設定（高速対応）"
 })
 
@@ -4819,7 +4821,7 @@ ManjiTab:AddSlider({
     end
 })
 
-local ManjiSection4 = ManjiTab:AddSection({
+ManjiSection4 = ManjiTab:AddSection({
     Name = "制御"
 })
 
@@ -4843,13 +4845,13 @@ ManjiTab:AddButton({
 -- ====================================================================
 -- タブ9: スター2✫（追加 - 太陽のようなギザギザ模様）
 -- ====================================================================
-local Star2Tab = Window:MakeTab({
+Star2Tab = Window:MakeTab({
     Name = "スター2✫",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local Star2Section1 = Star2Tab:AddSection({
+Star2Section1 = Star2Tab:AddSection({
     Name = "基本設定（高速・巨大）"
 })
 
@@ -4869,7 +4871,7 @@ Star2Tab:AddToggle({
     end
 })
 
-local Star2Section2 = Star2Tab:AddSection({
+Star2Section2 = Star2Tab:AddSection({
     Name = "サイズ設定（巨大）"
 })
 
@@ -4948,7 +4950,7 @@ Star2Tab:AddSlider({
     end
 })
 
-local Star2Section3 = Star2Tab:AddSection({
+Star2Section3 = Star2Tab:AddSection({
     Name = "動き設定（超高速）"
 })
 
@@ -4991,7 +4993,7 @@ Star2Tab:AddSlider({
     end
 })
 
-local Star2Section4 = Star2Tab:AddSection({
+Star2Section4 = Star2Tab:AddSection({
     Name = "ギザギザ効果"
 })
 
@@ -5021,7 +5023,7 @@ Star2Tab:AddSlider({
     end
 })
 
-local Star2Section5 = Star2Tab:AddSection({
+Star2Section5 = Star2Tab:AddSection({
     Name = "制御"
 })
 
@@ -5045,13 +5047,13 @@ Star2Tab:AddButton({
 -- ====================================================================
 -- タブ10: Mi(=^・^=)
 -- ====================================================================
-local UtilityTab = Window:MakeTab({
+UtilityTab = Window:MakeTab({
     Name = "Mi(=^・^=)",
     Icon = "rbxassetid://4483362458",
     PremiumOnly = false
 })
 
-local UtilitySection1 = UtilityTab:AddSection({
+UtilitySection1 = UtilityTab:AddSection({
     Name = "便利機能"
 })
 
@@ -5071,7 +5073,7 @@ UtilityTab:AddToggle({
     end
 })
 
-local UtilitySection2 = UtilityTab:AddSection({
+UtilitySection2 = UtilityTab:AddSection({
     Name = "情報"
 })
 
@@ -5106,18 +5108,18 @@ OrionLib:MakeNotification({
 -- Scripture機能: Grab/Object/Defense/Aura/Fun系タブ
 -- ==============================================
 
-local GrabTab = Window:MakeTab({Name = "掴み操作", Icon =  "rbxassetid://18624615643", PremiumOnly = false})
+GrabTab = Window:MakeTab({Name = "掴み操作", Icon =  "rbxassetid://18624615643", PremiumOnly = false})
 
-local ObjectGrabTab = Window:MakeTab({Name = "オブジェクト掴み", Icon =  "rbxassetid://18624606749", PremiumOnly = false})
-local DefenseTab = Window:MakeTab({Name = "防御", Icon =  "rbxassetid://18624604880", PremiumOnly = false})
-local BlobmanTab = Window:MakeTab({Name = "ブロブマン操作", Icon =  "rbxassetid://18624614127", PremiumOnly = false})
-local FunTab = Window:MakeTab({Name = "お楽しみ", Icon =  "rbxassetid://18624603093", PremiumOnly = false})
-local ScriptTab = Window:MakeTab({Name = "外部スクリプト", Icon =  "rbxassetid://11570626783", PremiumOnly = false})
-local AuraTab = Window:MakeTab({Name = "オーラ", Icon =  "rbxassetid://18624608005", PremiumOnly = false})
-local CharacterTab = Window:MakeTab({Name = "キャラクター", Icon =  "rbxassetid://18624601543", PremiumOnly = false})
-local ExplosionTab = Window:MakeTab({Name = "爆発操作", Icon =  "rbxassetid://18624610285", PremiumOnly = false})
-local KeybindsTab = Window:MakeTab({Name = "キーバインド", Icon =  "rbxassetid://18624616682", PremiumOnly = false})
-local DevTab = Window:MakeTab({Name = "開発テスト", Icon =  "rbxassetid://18624599762", PremiumOnly = false})
+ObjectGrabTab = Window:MakeTab({Name = "オブジェクト掴み", Icon =  "rbxassetid://18624606749", PremiumOnly = false})
+DefenseTab = Window:MakeTab({Name = "防御", Icon =  "rbxassetid://18624604880", PremiumOnly = false})
+BlobmanTab = Window:MakeTab({Name = "ブロブマン操作", Icon =  "rbxassetid://18624614127", PremiumOnly = false})
+FunTab = Window:MakeTab({Name = "お楽しみ", Icon =  "rbxassetid://18624603093", PremiumOnly = false})
+ScriptTab = Window:MakeTab({Name = "外部スクリプト", Icon =  "rbxassetid://11570626783", PremiumOnly = false})
+AuraTab = Window:MakeTab({Name = "オーラ", Icon =  "rbxassetid://18624608005", PremiumOnly = false})
+CharacterTab = Window:MakeTab({Name = "キャラクター", Icon =  "rbxassetid://18624601543", PremiumOnly = false})
+ExplosionTab = Window:MakeTab({Name = "爆発操作", Icon =  "rbxassetid://18624610285", PremiumOnly = false})
+KeybindsTab = Window:MakeTab({Name = "キーバインド", Icon =  "rbxassetid://18624616682", PremiumOnly = false})
+DevTab = Window:MakeTab({Name = "開発テスト", Icon =  "rbxassetid://18624599762", PremiumOnly = false})
 
 
 
@@ -5271,9 +5273,9 @@ GrabTab:AddToggle({
             end
             for _, player in pairs(Players:GetPlayers()) do
                 if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    local hrp = player.Character.HumanoidRootPart
+hrp = player.Character.HumanoidRootPart
                     if hrp:FindFirstChild("FirePlayerPart") then
-                        local fpp = hrp.FirePlayerPart
+fpp = hrp.FirePlayerPart
                         fpp.Size = Vector3.new(2.5, 5.5, 2.5)
                         fpp.CollisionGroup = "Default"
                         fpp.CanQuery = false
@@ -5611,7 +5613,7 @@ DefenseTab:AddToggle({
         end
     end
 })
-local blobman1
+blobman1 = nil
 blobman1 = BlobmanTab:AddToggle({
     Name = "全員掴みループ",
     Color = Color3.fromRGB(240, 0, 0),
@@ -5838,7 +5840,7 @@ AuraTab:AddToggle({
                                 end
                                 for player, platform in pairs(platforms) do
                                     if player.Character and player.Character.Humanoid and player.Character.Humanoid.Health > 1 then
-                                        local playerHumanoidRootPart = player.Character.HumanoidRootPart
+playerHumanoidRootPart = player.Character.HumanoidRootPart
                                         platform.Position = playerHumanoidRootPart.Position - Vector3.new(0, 3.994, 0)
                                     else
                                         platforms[player] = nil
@@ -6109,10 +6111,10 @@ FunTab:AddButton({
                 table.insert(decoys, descendant)
             end
         end
-        local numDecoys = #decoys
-        local midPoint = math.ceil(numDecoys / 2)
+numDecoys = #decoys
+midPoint = math.ceil(numDecoys / 2)
 
-        local function updateDecoyPositions()
+function updateDecoyPositions()
             for index, decoy in pairs(decoys) do
                 local torso = decoy:FindFirstChild("Torso")
                 if torso then
@@ -6129,16 +6131,16 @@ FunTab:AddButton({
                                 targetPosition = targetPosition - forward * decoyOffset + right * offset
                             end
                         else
-                            local nearestPlayer = getNearestPlayer()
+nearestPlayer = getNearestPlayer()
                             if nearestPlayer and nearestPlayer.Character and nearestPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                                local angle = math.rad((index - 1) * (360 / numDecoys))
+angle = math.rad((index - 1) * (360 / numDecoys))
                                 targetPosition = nearestPlayer.Character.HumanoidRootPart.Position + Vector3.new(math.cos(angle) * circleRadius, 0, math.sin(angle) * circleRadius)
                                 bodyGyro.CFrame = CFrame.new(torso.Position, nearestPlayer.Character.HumanoidRootPart.Position)
                             end
                         end
 
                         if targetPosition then
-                            local distance = (targetPosition - torso.Position).Magnitude
+distance = (targetPosition - torso.Position).Magnitude
                             if distance > stopDistance then
                                 bodyPosition.Position = targetPosition
                                 if followMode then
@@ -6154,7 +6156,7 @@ FunTab:AddButton({
             end
         end
 
-        local function setupDecoy(decoy)
+function setupDecoy(decoy)
             local torso = decoy:FindFirstChild("Torso")
             if torso then
                 local bodyPosition = Instance.new("BodyPosition")
@@ -6215,7 +6217,7 @@ ScriptTab:AddButton({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()
     end
 })
-local KeybindSection = KeybindsTab:AddSection({Name = "プレイヤー操作キー"})
+KeybindSection = KeybindsTab:AddSection({Name = "プレイヤー操作キー"})
 KeybindsTab:AddParagraph("ヒント", "Press while looking at a player")
 
 KeybindsTab:AddBind({
@@ -6240,7 +6242,7 @@ KeybindsTab:AddBind({
                     end
                 end
 
-                local bodyVelocity = Instance.new("BodyVelocity")
+bodyVelocity = Instance.new("BodyVelocity")
                 bodyVelocity.Parent = character.Torso
                 bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
                 bodyVelocity.Velocity = Vector3.new(0, -4, 0)
@@ -6269,13 +6271,13 @@ KeybindsTab:AddBind({
             if character:IsA("Model") and character:FindFirstChildOfClass("Humanoid") then
                 if kickMode == 1 then   
                     SetNetworkOwner:FireServer(character.HumanoidRootPart.FirePlayerPart, character.HumanoidRootPart.FirePlayerPart.CFrame)
-                    local bodyVelocity = Instance.new("BodyVelocity")
+bodyVelocity = Instance.new("BodyVelocity")
                     bodyVelocity.Parent = character.HumanoidRootPart.FirePlayerPart
                     bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
                     bodyVelocity.Velocity = Vector3.new(0, 20, 0)
                 elseif kickMode == 2 then
                     SetNetworkOwner:FireServer(character.HumanoidRootPart.FirePlayerPart, character.HumanoidRootPart.FirePlayerPart.CFrame)
-                    local platform = Instance.new("Part")
+platform = Instance.new("Part")
                     platform.Name = "FloatingPlatform"
                     platform.Size = Vector3.new(5, 2, 5)
                     platform.Anchored = true
@@ -6343,7 +6345,7 @@ KeybindsTab:AddBind({
             return
         end
         if target and target:IsA("BasePart") then
-            local character = target.Parent
+character = target.Parent
             if target.Name == "FirePlayerPart" then
                 character = target.Parent.Parent
             end
@@ -6351,8 +6353,9 @@ KeybindsTab:AddBind({
                 if not toysFolder:FindFirstChild("Campfire") then
                     spawnItem("Campfire", Vector3.new(-72.9304581, -5.96906614, -265.543732))
                 end
-                local campfire = toysFolder.Campfire
-                local firePlayerPart
+
+campfire = toysFolder.Campfire
+firePlayerPart = nil
                 SetNetworkOwner:FireServer(character.HumanoidRootPart, character.HumanoidRootPart.CFrame)
                 for _, part in pairs(campfire:GetChildren()) do
                     if part.Name == "FirePlayerPart" then
@@ -6368,7 +6371,7 @@ KeybindsTab:AddBind({
         end
     end
 })
-local KeybindSection2 = KeybindsTab:AddSection({Name = "ミサイル操作キー"})
+KeybindSection2 = KeybindsTab:AddSection({Name = "ミサイル操作キー"})
 KeybindsTab:AddParagraph("ヒント", "どこかを押してください")
 KeybindsTab:AddBind({
     Name = "爆弾爆発",
@@ -6381,7 +6384,7 @@ KeybindsTab:AddBind({
             OrionLib:MakeNotification({Name = "おもちゃ未所有", Content = "爆弾ミサイルを持っていません", Image = "rbxassetid://4483345998", Time = 3})
             return
         end
-        local connection
+connection = nil
         connection = toysFolder.ChildAdded:Connect(function(child)
             if child.Name == "BombMissile" then
                 if child:WaitForChild("ThisToysNumber", 1) then
@@ -6428,7 +6431,7 @@ KeybindsTab:AddBind({
             return
         end
         
-        local connection
+connection = nil
         connection = toysFolder.ChildAdded:Connect(function(child)
             if child.Name == "BombMissile" then
                 if child:WaitForChild("ThisToysNumber", 1) then
@@ -6461,7 +6464,7 @@ KeybindsTab:AddBind({
             OrionLib:MakeNotification({Name = "おもちゃ未所有", Content = "花火ミサイルを持っていません", Image = "rbxassetid://4483345998", Time = 3})
             return
         end
-        local connection
+connection = nil
         connection = toysFolder.ChildAdded:Connect(function(child)
             if child.Name == "FireworkMissile" then
                 if child:WaitForChild("ThisToysNumber", 1) then
@@ -6525,9 +6528,9 @@ KeybindsTab:AddBind({
             return
         end
 
-        local bomb = table.remove(bombList, 1)
+bomb = table.remove(bombList, 1)
 
-        local args = {
+args = {
             [1] = {
                 ["範囲"] = 17.5,
                 ["TimeLength"] = 2,
@@ -6557,8 +6560,8 @@ KeybindsTab:AddBind({
             return
         end
         for i = #bombList, 1, -1 do
-            local bomb = table.remove(bombList, i)
-            local args = {
+bomb = table.remove(bombList, i)
+args = {
                 [1] = {
                     ["範囲"] = 17.5,
                     ["TimeLength"] = 2,
@@ -6589,10 +6592,10 @@ KeybindsTab:AddBind({
             OrionLib:MakeNotification({Name = "爆弾なし", Content = "保存された爆弾がありません", Image = "rbxassetid://4483345998", Time = 2})
             return
         end
-        local char = getNearestPlayer().Character
+char = getNearestPlayer().Character
         for i = #bombList, 1, -1 do
-            local bomb = table.remove(bombList, i)
-            local args = {
+bomb = table.remove(bombList, i)
+args = {
                 [1] = {
                     ["範囲"] = 17.5,
                     ["TimeLength"] = 2,
@@ -6637,7 +6640,7 @@ DevTab:AddToggle({
 					end
             
 
-					local bodyPosition = Instance.new("BodyPosition")
+bodyPosition = Instance.new("BodyPosition")
 
 					bodyPosition.P = 15000
 					bodyPosition.D = 200
@@ -6646,7 +6649,7 @@ DevTab:AddToggle({
 					bodyPosition.Position = part.Position
 					table.insert(bodyPositions, bodyPosition)
 
-					local alignOrientation = Instance.new("AlignOrientation")
+alignOrientation = Instance.new("AlignOrientation")
 					alignOrientation.MaxTorque = 400000
 					alignOrientation.Mode = Enum.OrientationAlignmentMode.OneAttachment
 					alignOrientation.Responsiveness = 2000
@@ -6654,7 +6657,7 @@ DevTab:AddToggle({
 					alignOrientation.PrimaryAxisOnly = false
 					table.insert(alignOrientations, alignOrientation)
 
-					local attachment = Instance.new("Attachment")
+attachment = Instance.new("Attachment")
 					attachment.Parent = part
 					alignOrientation.Attachment0 = attachment
 				end
@@ -6666,8 +6669,8 @@ DevTab:AddToggle({
 
 				for i, v in ipairs(lightbitpos) do
 					bodyPositions[i].Position = v
-					local direction = (localPlayer.Character.HumanoidRootPart.Position - bodyPositions[i].Position).unit
-					local lookAtCFrame = CFrame.lookAt(bodyPositions[i].Position, localPlayer.Character.HumanoidRootPart.Position)
+direction = (localPlayer.Character.HumanoidRootPart.Position - bodyPositions[i].Position).unit
+lookAtCFrame = CFrame.lookAt(bodyPositions[i].Position, localPlayer.Character.HumanoidRootPart.Position)
 					alignOrientations[i].CFrame = lookAtCFrame
 				end
 			end)
@@ -6798,17 +6801,18 @@ DevTab:AddToggle({
 
 
 -- ==============================================
+
 -- AF_Hub V3: ターゲット選択・キル・爆発システム
 -- ==============================================
 -- =============================
-local TargetSystem = {
+TargetSystem = {
     TargetList = {},  -- {[UserId] = {Player = player, Name = name, BuggedUntil = tick(), LastRespawn = tick()}}
     AllPlayersMode = false,
     Dropdowns = {}
 }
 
 -- すべてのプレイヤー名を取得
-local function getAllPlayerNames()
+function getAllPlayerNames()
     local names = {}
     for _, player in ipairs(Players:GetPlayers()) do
         if player ~= localPlayer then
@@ -6819,7 +6823,7 @@ local function getAllPlayerNames()
 end
 
 -- ドロップダウンを更新
-local function updateAllDropdowns()
+function updateAllDropdowns()
     local names = getAllPlayerNames()
     for _, dropdown in pairs(TargetSystem.Dropdowns) do
         if dropdown and dropdown.Refresh then
@@ -6831,7 +6835,7 @@ local function updateAllDropdowns()
 end
 
 -- プレイヤーをターゲットリストに追加
-local function addPlayerToTargets(player)
+function addPlayerToTargets(player)
     if player and player ~= localPlayer then
         TargetSystem.TargetList[player.UserId] = {
             Player = player,
@@ -6845,17 +6849,17 @@ local function addPlayerToTargets(player)
 end
 
 -- プレイヤーをターゲットリストから削除
-local function removePlayerFromTargets(userId)
+function removePlayerFromTargets(userId)
     TargetSystem.TargetList[userId] = nil
 end
 
 -- ターゲットリストをクリア
-local function clearTargetList()
+function clearTargetList()
     TargetSystem.TargetList = {}
 end
 
 -- プレイヤーがバグ状態かチェック
-local function isPlayerBugged(userId)
+function isPlayerBugged(userId)
     local target = TargetSystem.TargetList[userId]
     if target and target.BuggedUntil > tick() then
         return true
@@ -6864,7 +6868,7 @@ local function isPlayerBugged(userId)
 end
 
 -- プレイヤーをバグ状態に設定
-local function setPlayerBugged(userId, duration)
+function setPlayerBugged(userId, duration)
     local target = TargetSystem.TargetList[userId]
     if target then
         target.BuggedUntil = tick() + (duration or 5)
@@ -6872,14 +6876,14 @@ local function setPlayerBugged(userId, duration)
 end
 
 -- プレイヤーがリスポーンしたか検出
-local function detectRespawn(player)
+function detectRespawn(player)
     local target = TargetSystem.TargetList[player.UserId]
     if not target then return false end
     
-    local char = player.Character
+char = player.Character
     if not char then return false end
     
-    local humanoid = char:FindFirstChild("Humanoid")
+humanoid = char:FindFirstChild("Humanoid")
     if not humanoid then return false end
     
     -- リスポーン判定：Healthが100になった、またはキャラクターが再追加された
@@ -6925,13 +6929,13 @@ end)
 -- =============================
 -- シグマプレイヤータブ
 -- =============================
-local V3PlayerTab = Window:MakeTab({Name = "シグマプレイヤー", Icon = "rbxassetid://4483362458", PremiumOnly = false})
+V3PlayerTab = Window:MakeTab({Name = "シグマプレイヤー", Icon = "rbxassetid://4483362458", PremiumOnly = false})
 
 V3PlayerTab:AddSection({Name = "移動"})
 
 -- 歩行速度
-local hackedWalkSpeed = 16
-local walkSpeedConnection = nil
+hackedWalkSpeed = 16
+walkSpeedConnection = nil
 
 V3PlayerTab:AddSlider({
     Name = "歩行速度",
@@ -6946,7 +6950,7 @@ V3PlayerTab:AddSlider({
             walkSpeedConnection:Disconnect()
         end
         
-        local char = localPlayer.Character
+char = localPlayer.Character
         if char and char:FindFirstChild("Humanoid") then
             char.Humanoid.WalkSpeed = value
         end
@@ -6976,7 +6980,7 @@ V3PlayerTab:AddSlider({
 })
 
 -- 無限ジャンプ
-local infiniteJumpEnabled = false
+infiniteJumpEnabled = false
 UserInputService.JumpRequest:Connect(function()
     if infiniteJumpEnabled then
         local char = localPlayer.Character
@@ -6997,10 +7001,10 @@ V3PlayerTab:AddToggle({
 V3PlayerTab:AddSection({Name = "カメラ＆3人称視点"})
 
 -- 3人称視点（ホイールズーム対応）
-local thirdPersonEnabled = false
-local thirdPersonDistance = 15
-local minZoom = 5
-local maxZoom = 100
+thirdPersonEnabled = false
+thirdPersonDistance = 15
+minZoom = 5
+maxZoom = 100
 
 UserInputService.InputChanged:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseWheel and thirdPersonEnabled then
@@ -7054,13 +7058,13 @@ V3PlayerTab:AddSlider({
 -- =============================
 -- 戦闘＆キルタブ（完全版）
 -- =============================
-local CombatTab = Window:MakeTab({Name = "戦闘＆キル", Icon = "rbxassetid://4483362458", PremiumOnly = false})
+CombatTab = Window:MakeTab({Name = "戦闘＆キル", Icon = "rbxassetid://4483362458", PremiumOnly = false})
 
 CombatTab:AddSection({Name = "ターゲット選択"})
 
 -- プレイヤー選択ドロップダウン
-local selectedPlayerName = nil
-local playerDropdown = CombatTab:AddDropdown({
+selectedPlayerName = nil
+playerDropdown = CombatTab:AddDropdown({
     Name = "プレイヤーを選択",
     Options = getAllPlayerNames(),
     Default = "",
@@ -7137,11 +7141,11 @@ CombatTab:AddToggle({
 CombatTab:AddSection({Name = "キル機能"})
 
 -- キルループ（Cosmic Hub方式 - バグ検出・自動リトライ対応）
-local killLoopEnabled = false
-local killLoopConnection = nil
-local killDelay = 0.5
+killLoopEnabled = false
+killLoopConnection = nil
+killDelay = 0.5
 
-local function attemptKill(targetPlayer)
+function attemptKill(targetPlayer)
     if not targetPlayer or targetPlayer == localPlayer then return false end
     
     -- バグ状態チェック
@@ -7149,11 +7153,11 @@ local function attemptKill(targetPlayer)
         return false
     end
     
-    local targetChar = targetPlayer.Character
+targetChar = targetPlayer.Character
     if not targetChar then return false end
     
-    local targetHum = targetChar:FindFirstChild("Humanoid")
-    local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
+targetHum = targetChar:FindFirstChild("Humanoid")
+targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
     
     if not (targetHum and targetHRP) then return false end
     if targetHum.Health <= 0 then return false end
@@ -7165,8 +7169,8 @@ local function attemptKill(targetPlayer)
         return false
     end
     
-    local myChar = localPlayer.Character
-    local myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
+myChar = localPlayer.Character
+myHRP = myChar and myChar:FindFirstChild("HumanoidRootPart")
     
     if not myHRP then return false end
     
@@ -7244,10 +7248,10 @@ CombatTab:AddSlider({
 CombatTab:AddSection({Name = "ブロブマン対策"})
 
 -- ブロブマンキック（選択したプレイヤーのみ - Ftap方式）
-local blobKickEnabled = false
-local blobKickConnections = {}
+blobKickEnabled = false
+blobKickConnections = {}
 
-local function spawnSnowball(position)
+function spawnSnowball(position)
     task.spawn(function()
         if MenuToys then
             local spawnFunc = MenuToys:FindFirstChild("SpawnToyRemoteFunction")
@@ -7260,12 +7264,12 @@ local function spawnSnowball(position)
     end)
 end
 
-local function tpSnowballsToTarget(targetPlayer)
+function tpSnowballsToTarget(targetPlayer)
     local toyFolder = Workspace:FindFirstChild(localPlayer.Name .. "SpawnedInToys")
     if not toyFolder then return end
     
-    local targetChar = targetPlayer.Character
-    local targetHRP = targetChar and targetChar:FindFirstChild("HumanoidRootPart")
+targetChar = targetPlayer.Character
+targetHRP = targetChar and targetChar:FindFirstChild("HumanoidRootPart")
     if not targetHRP then return end
     
     for _, toy in ipairs(toyFolder:GetChildren()) do
@@ -7281,7 +7285,7 @@ local function tpSnowballsToTarget(targetPlayer)
     end
 end
 
-local function startBlobKick()
+function startBlobKick()
     -- 検出ループ
     blobKickConnections.detect = RunService.Heartbeat:Connect(function()
         for userId, target in pairs(TargetSystem.TargetList) do
@@ -7316,7 +7320,7 @@ local function startBlobKick()
     end)
 end
 
-local function stopBlobKick()
+function stopBlobKick()
     for _, conn in pairs(blobKickConnections) do
         if conn then
             conn:Disconnect()
@@ -7354,9 +7358,9 @@ CombatTab:AddToggle({
 CombatTab:AddSection({Name = "スーパーフリング"})
 
 -- スーパーフリング（Ftap方式完全実装）
-local FLING_VELOCITY_NAME = "FlingVelocity"
-local superFlingEnabled = true
-local flingStrength = 850
+FLING_VELOCITY_NAME = "FlingVelocity"
+superFlingEnabled = true
+flingStrength = 850
 
 Workspace.ChildAdded:Connect(function(child)
     if child.Name == "GrabParts" then
@@ -7368,11 +7372,11 @@ Workspace.ChildAdded:Connect(function(child)
             return
         end
         
-        local bodyVelocity = Instance.new("BodyVelocity")
+bodyVelocity = Instance.new("BodyVelocity")
         bodyVelocity.Name = FLING_VELOCITY_NAME
         bodyVelocity.Parent = grabPart
         
-        local connection
+connection = nil
         connection = child:GetPropertyChangedSignal("Parent"):Connect(function()
             if child.Parent == nil then
                 if superFlingEnabled then
@@ -7425,7 +7429,7 @@ OrionLib:MakeNotification({
 -- =============================
 -- 爆発タブ
 -- =============================
-local V3ExplosionTab = Window:MakeTab({Name = "爆発", Icon = "rbxassetid://4483362458", PremiumOnly = false})
+V3ExplosionTab = Window:MakeTab({Name = "爆発", Icon = "rbxassetid://4483362458", PremiumOnly = false})
 
 -- おもちゃの所有状態を取得
 pcall(function()
@@ -7438,9 +7442,9 @@ pcall(function()
 end)
 
 -- おもちゃフォルダを取得
-local toyFolder = Workspace:FindFirstChild(localPlayer.Name .. "SpawnedInToys")
+toyFolder = Workspace:FindFirstChild(localPlayer.Name .. "SpawnedInToys")
 if not toyFolder then
-    local success, result = pcall(function()
+success, result = pcall(function()
         return Workspace:WaitForChild(localPlayer.Name .. "SpawnedInToys", 5)
     end)
     if success and result then
@@ -7452,7 +7456,7 @@ if not toyFolder then
 end
 
 -- おもちゃをスポーンする関数
-local function spawnToy(toyName, cframe)
+function spawnToy(toyName, cframe)
     task.spawn(function()
         if MenuToys then
             local spawnFunc = MenuToys:FindFirstChild("SpawnToyRemoteFunction")
@@ -7466,7 +7470,7 @@ local function spawnToy(toyName, cframe)
 end
 
 -- 最寄りのプレイヤーを取得
-local function getNearestPlayer()
+function getNearestPlayer()
     local nearestDist = math.huge
     local nearestPlayer = nil
     
@@ -7499,10 +7503,10 @@ V3ExplosionTab:AddBind({
             local myChar = localPlayer.Character
             if not myChar then return end
             
-            local headCFrame = myChar:FindFirstChild("Head") and myChar.Head.CFrame or myChar.HumanoidRootPart.CFrame
+headCFrame = myChar:FindFirstChild("Head") and myChar.Head.CFrame or myChar.HumanoidRootPart.CFrame
             
-            local bombSpawned = false
-            local connection = toyFolder.ChildAdded:Connect(function(toy)
+bombSpawned = false
+connection = toyFolder.ChildAdded:Connect(function(toy)
                 if toy.Name == "BombMissile" and not bombSpawned then
                     bombSpawned = true
                     task.wait(0.1)
@@ -7513,9 +7517,9 @@ V3ExplosionTab:AddBind({
                     end
                     
                     if ReplicatedStorage:FindFirstChild("BombEvents") then
-                        local bombExplode = ReplicatedStorage.BombEvents:FindFirstChild("BombExplode")
+bombExplode = ReplicatedStorage.BombEvents:FindFirstChild("BombExplode")
                         if bombExplode then
-                            local args = {
+args = {
                                 {
                                     Radius = 17.5,
                                     TimeLength = 2,
@@ -7561,10 +7565,10 @@ V3ExplosionTab:AddBind({
             local myChar = localPlayer.Character
             if not myChar then return end
             
-            local headCFrame = myChar:FindFirstChild("Head") and myChar.Head.CFrame or myChar.HumanoidRootPart.CFrame
+headCFrame = myChar:FindFirstChild("Head") and myChar.Head.CFrame or myChar.HumanoidRootPart.CFrame
             
-            local bombSpawned = false
-            local connection = toyFolder.ChildAdded:Connect(function(toy)
+bombSpawned = false
+connection = toyFolder.ChildAdded:Connect(function(toy)
                 if toy.Name == "BombMissile" and not bombSpawned then
                     bombSpawned = true
                     task.wait(0.1)
@@ -7575,7 +7579,7 @@ V3ExplosionTab:AddBind({
                             SetNetworkOwner:FireServer(hitDetector, hitDetector.CFrame)
                         end
                         
-                        local bodyVelocity = Instance.new("BodyVelocity", hitDetector)
+bodyVelocity = Instance.new("BodyVelocity", hitDetector)
                         bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
                         bodyVelocity.Velocity = Workspace.CurrentCamera.CFrame.LookVector * 500
                         Debris:AddItem(bodyVelocity, 10)
@@ -7608,10 +7612,10 @@ V3ExplosionTab:AddBind({
             local myChar = localPlayer.Character
             if not myChar then return end
             
-            local headCFrame = myChar:FindFirstChild("Head") and myChar.Head.CFrame or myChar.HumanoidRootPart.CFrame
+headCFrame = myChar:FindFirstChild("Head") and myChar.Head.CFrame or myChar.HumanoidRootPart.CFrame
             
-            local fireworkSpawned = false
-            local connection = toyFolder.ChildAdded:Connect(function(toy)
+fireworkSpawned = false
+connection = toyFolder.ChildAdded:Connect(function(toy)
                 if toy.Name == "FireworkMissile" and not fireworkSpawned then
                     fireworkSpawned = true
                     task.wait(0.1)
@@ -7622,9 +7626,9 @@ V3ExplosionTab:AddBind({
                     end
                     
                     if ReplicatedStorage:FindFirstChild("BombEvents") then
-                        local bombExplode = ReplicatedStorage.BombEvents:FindFirstChild("BombExplode")
+bombExplode = ReplicatedStorage.BombEvents:FindFirstChild("BombExplode")
                         if bombExplode then
-                            local args = {
+args = {
                                 {
                                     Radius = 17.5,
                                     TimeLength = 2,
@@ -7663,8 +7667,8 @@ V3ExplosionTab:AddBind({
 V3ExplosionTab:AddSection({Name = "ミサイルキャッシュ"})
 
 -- ミサイルキャッシュリロード（Qキー長押し）
-local cacheReloadActive = false
-local cacheReloadCoroutine = nil
+cacheReloadActive = false
+cacheReloadCoroutine = nil
 
 V3ExplosionTab:AddBind({
     Name = "ミサイルキャッシュリロード",
@@ -7724,8 +7728,8 @@ V3ExplosionTab:AddBind({
                 end)
                 
                 while cacheReloadActive do
-                    local canSpawn = localPlayer:FindFirstChild("CanSpawnToy")
-                    local myChar = localPlayer.Character
+canSpawn = localPlayer:FindFirstChild("CanSpawnToy")
+myChar = localPlayer.Character
                     if canSpawn and canSpawn.Value and #bombList < _G.MaxMissiles and myChar and myChar:FindFirstChild("Head") then
                         spawnToy(_G.ToyToLoad, myChar.Head.CFrame or myChar.HumanoidRootPart.CFrame)
                     end
@@ -7915,9 +7919,10 @@ OrionLib:MakeNotification({
 
 
 -- ==============================================
+
 -- V2固有機能: Fun Toys / Misc
 -- ==============================================
-local V2FunTab = Window:MakeTab({Name = "おもちゃ遊び", Icon = "rbxassetid://4483362458", PremiumOnly = false})
+V2FunTab = Window:MakeTab({Name = "おもちゃ遊び", Icon = "rbxassetid://4483362458", PremiumOnly = false})
 
 V2FunTab:AddButton({
     Name = "無重力モード (0キーでON/OFF)",
@@ -8004,7 +8009,7 @@ V2FunTab:AddButton({
 })
 
 -- Sigma Misc
-local V2MiscTab = Window:MakeTab({Name = "その他", Icon = "rbxassetid://4483362458", PremiumOnly = false})
+V2MiscTab = Window:MakeTab({Name = "その他", Icon = "rbxassetid://4483362458", PremiumOnly = false})
 
 V2MiscTab:AddButton({
     Name = "FOVをデフォルトに戻す",
